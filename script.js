@@ -1,28 +1,173 @@
 /* ============================================================
    PROJETO INTEGRADOR CEP — 3º TRI 2026
-   Script principal: simuladores, calculadora e gráfico comparativo
+   Script principal: simuladores, calculadora, gráfico comparativo,
+   modo escuro, narração em áudio e animações de entrada
    ============================================================ */
 
 /* ============ ACESSIBILIDADE ============ */
 function toggleContraste() {
   document.body.classList.toggle('alto-contraste');
+  if (document.body.classList.contains('alto-contraste')) {
+    document.body.classList.remove('dark-mode');
+  }
+  mostrarToast('Alto contraste ' + (document.body.classList.contains('alto-contraste') ? 'ativado' : 'desativado'));
 }
+
 function toggleDislexia() {
   document.body.classList.toggle('dislexia');
+  const btn = event.target;
+  btn.classList.toggle('ativo');
+  mostrarToast('Fonte para dislexia ' + (document.body.classList.contains('dislexia') ? 'ativada' : 'desativada'));
 }
+
+/* 🆕 MODO ESCURO */
+function toggleDarkMode() {
+  document.body.classList.toggle('dark-mode');
+  const btn = document.getElementById('btnDark');
+  const ativo = document.body.classList.contains('dark-mode');
+  btn.textContent = ativo ? '☀️ Claro' : '🌙 Escuro';
+  btn.classList.toggle('ativo', ativo);
+  if (ativo) document.body.classList.remove('alto-contraste');
+  localStorage.setItem('darkMode', ativo ? '1' : '0');
+  mostrarToast('Modo ' + (ativo ? 'escuro' : 'claro') + ' ativado');
+}
+
+// Restaurar preferência ao carregar
+if (localStorage.getItem('darkMode') === '1') {
+  document.body.classList.add('dark-mode');
+  window.addEventListener('DOMContentLoaded', () => {
+    const btn = document.getElementById('btnDark');
+    if (btn) { btn.textContent = '☀️ Claro'; btn.classList.add('ativo'); }
+  });
+}
+
 let tamanhoFonte = 16;
 function aumentarFonte() {
   if (tamanhoFonte < 24) {
     tamanhoFonte += 2;
     document.documentElement.style.setProperty('--tamanho-base', tamanhoFonte + 'px');
+    mostrarToast('Fonte: ' + tamanhoFonte + 'px');
   }
 }
 function diminuirFonte() {
   if (tamanhoFonte > 12) {
     tamanhoFonte -= 2;
     document.documentElement.style.setProperty('--tamanho-base', tamanhoFonte + 'px');
+    mostrarToast('Fonte: ' + tamanhoFonte + 'px');
   }
 }
+
+/* 🆕 NARRAÇÃO EM ÁUDIO (Web Speech API) */
+let narracaoAtiva = false;
+let utteranceAtual = null;
+
+function toggleNarracao() {
+  if (!('speechSynthesis' in window)) {
+    mostrarToast('⚠️ Seu navegador não suporta narração em áudio');
+    return;
+  }
+  narracaoAtiva = !narracaoAtiva;
+  const btn = document.getElementById('btnNarracao');
+  btn.classList.toggle('ativo', narracaoAtiva);
+  
+  if (narracaoAtiva) {
+    btn.textContent = '🔊 Narrando...';
+    narrarProximaSecao();
+    mostrarToast('🔊 Narração iniciada');
+  } else {
+    btn.textContent = '🔊 Narrar';
+    window.speechSynthesis.cancel();
+    mostrarToast('⏹️ Narração pausada');
+  }
+}
+
+function pararNarracao() {
+  narracaoAtiva = false;
+  window.speechSynthesis.cancel();
+  const btn = document.getElementById('btnNarracao');
+  if (btn) { btn.textContent = '🔊 Narrar'; btn.classList.remove('ativo'); }
+  mostrarToast('⏹️ Narração parada');
+}
+
+function narrarProximaSecao() {
+  if (!narracaoAtiva) return;
+  
+  const secoes = document.querySelectorAll('section, .hero');
+  const secoesArray = Array.from(secoes);
+  
+  // Encontrar a próxima seção não narrada
+  const scrollY = window.scrollY + 200;
+  let proxima = secoesArray.find(s => s.offsetTop > scrollY);
+  
+  if (!proxima) {
+    // Voltar ao início
+    proxima = secoesArray[0];
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+  
+  if (proxima) {
+    // Pegar apenas o texto visível (títulos e parágrafos)
+    const texto = proxima.innerText
+      .replace(/🎮|🎨|🧮|📊|🔍|💡|🌞|🌱|🏊|🌈|🤖|💻|🎯|🗺️|📱|🔥|💰|🌳/g, '')
+      .replace(/\s+/g, ' ')
+      .trim();
+    
+    if (texto.length > 10) {
+      utteranceAtual = new SpeechSynthesisUtterance(texto.substring(0, 500));
+      utteranceAtual.lang = 'pt-BR';
+      utteranceAtual.rate = 0.95;
+      utteranceAtual.pitch = 1;
+      
+      // Tentar voz em português
+      const vozes = window.speechSynthesis.getVoices();
+      const vozPt = vozes.find(v => v.lang.startsWith('pt'));
+      if (vozPt) utteranceAtual.voice = vozPt;
+      
+      utteranceAtual.onend = () => {
+        if (narracaoAtiva) {
+          setTimeout(() => {
+            window.scrollTo({ top: proxima.offsetTop - 100, behavior: 'smooth' });
+            setTimeout(narrarProximaSecao, 1500);
+          }, 500);
+        }
+      };
+      
+      window.speechSynthesis.speak(utteranceAtual);
+    }
+  }
+}
+
+// Carregar vozes
+if ('speechSynthesis' in window) {
+  window.speechSynthesis.onvoiceschanged = () => window.speechSynthesis.getVoices();
+}
+
+/* 🆕 TOAST DE NOTIFICAÇÃO */
+function mostrarToast(mensagem) {
+  let toast = document.querySelector('.toast');
+  if (!toast) {
+    toast = document.createElement('div');
+    toast.className = 'toast';
+    document.body.appendChild(toast);
+  }
+  toast.textContent = mensagem;
+  toast.classList.add('visivel');
+  clearTimeout(toast._timeout);
+  toast._timeout = setTimeout(() => toast.classList.remove('visivel'), 2500);
+}
+
+/* 🆕 ANIMAÇÕES DE ENTRADA (SCROLL REVEAL) */
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visivel');
+    }
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+});
 
 /* ============ UTIL: comprimento de onda -> cor RGB ============ */
 function lambdaParaCor(lambda) {
@@ -56,14 +201,12 @@ function desenharDifracao() {
   
   const cor = lambdaParaCor(lambda);
   
-  // Fenda
   ctxD.fillStyle = '#333';
   ctxD.fillRect(w/2 - 4, 0, 8, h/2 - 20);
   ctxD.fillRect(w/2 - 4, h/2 + 20, 8, h/2 - 20);
   ctxD.fillStyle = cor;
   ctxD.fillRect(w/2 - 2, h/2 - 20, 4, 40);
   
-  // Padrão de difração (sinc²)
   for (let x = 0; x < w; x++) {
     const dx = x - w/2;
     const theta = dx / (w/2);
@@ -99,7 +242,6 @@ function desenharPrisma() {
   const intens = +intSlider.value / 100;
   valorInt.textContent = intSlider.value;
   
-  // Raio branco
   ctxP.strokeStyle = `rgba(255,255,255,${intens})`;
   ctxP.lineWidth = 4;
   ctxP.beginPath();
@@ -107,7 +249,6 @@ function desenharPrisma() {
   ctxP.lineTo(200, h/2);
   ctxP.stroke();
   
-  // Prisma
   ctxP.fillStyle = 'rgba(200,230,255,0.4)';
   ctxP.strokeStyle = '#fff';
   ctxP.lineWidth = 2;
@@ -119,10 +260,7 @@ function desenharPrisma() {
   ctxP.fill();
   ctxP.stroke();
   
-  // Raios coloridos
-  const cores = [
-    {l:400}, {l:450}, {l:500}, {l:550}, {l:600}, {l:650}, {l:700}
-  ];
+  const cores = [{l:400},{l:450},{l:500},{l:550},{l:600},{l:650},{l:700}];
   cores.forEach((c,i) => {
     const ang = (i - 3) * 4;
     ctxP.strokeStyle = lambdaParaCor(c.l);
@@ -167,7 +305,6 @@ function desenharPlanck() {
   const lambdaMax = 2.898e-3 / T;
   const lambdaMaxNm = lambdaMax * 1e9;
   
-  // Eixos
   ctxB.strokeStyle = '#fff';
   ctxB.lineWidth = 1;
   ctxB.beginPath();
@@ -182,7 +319,6 @@ function desenharPlanck() {
   ctxB.fillText('λ (nm)', w-60, ht-10);
   ctxB.fillText('B(λ,T)', 5, 15);
   
-  // Calcular curva
   const lambdaMin = 100e-9, lambdaMaxR = 3000e-9;
   let Bmax = 0;
   const pontos = [];
@@ -193,7 +329,6 @@ function desenharPlanck() {
     pontos.push({lam, B});
   }
   
-  // Desenhar curva
   ctxB.strokeStyle = lambdaParaCor(Math.max(380, Math.min(750, lambdaMaxNm)));
   ctxB.lineWidth = 3;
   ctxB.beginPath();
@@ -204,14 +339,12 @@ function desenharPlanck() {
   });
   ctxB.stroke();
   
-  // Marcar pico
   const xPico = 50 + (w-70) * (lambdaMax - lambdaMin)/(lambdaMaxR - lambdaMin);
   ctxB.fillStyle = '#ff0';
   ctxB.beginPath();
   ctxB.arc(xPico, ht-30 - (ht-50), 5, 0, 2*Math.PI);
   ctxB.fill();
   
-  // Escala λ
   for (let l = 500; l <= 2500; l += 500) {
     const x = 50 + (w-70) * (l*1e-9 - lambdaMin)/(lambdaMaxR - lambdaMin);
     ctxB.fillStyle = '#fff';
@@ -223,7 +356,7 @@ function desenharPlanck() {
 tempSlider.addEventListener('input', desenharPlanck);
 desenharPlanck();
 
-/* ============ 🆕 SIMULADOR 4: GRÁFICO COMPARATIVO ============ */
+/* ============ SIMULADOR 4: GRÁFICO COMPARATIVO ============ */
 const canvasComp = document.getElementById('canvasComparativo');
 const ctxComp = canvasComp.getContext('2d');
 const chkLampada = document.getElementById('chkLampada');
@@ -240,7 +373,6 @@ function desenharComparativo() {
   if (chkSol.checked)     corpos.push({T:5800, cor:'#ffd60a', nome:'Sol 5800K'});
   if (chkEstrela.checked) corpos.push({T:10000, cor:'#4da6ff', nome:'Estrela 10000K'});
   
-  // Eixos
   ctxComp.strokeStyle = '#fff';
   ctxComp.lineWidth = 1;
   ctxComp.beginPath();
@@ -255,16 +387,13 @@ function desenharComparativo() {
   ctxComp.fillText('λ (nm)', w-60, ht-20);
   ctxComp.fillText('B(λ,T)', 5, 15);
   
-  // Escala λ
+  const lambdaMin = 100e-9, lambdaMaxR = 3000e-9;
   for (let l = 500; l <= 2500; l += 500) {
-    const lambdaMin = 100e-9, lambdaMaxR = 3000e-9;
     const x = 50 + (w-70) * (l*1e-9 - lambdaMin)/(lambdaMaxR - lambdaMin);
     ctxComp.fillStyle = '#fff';
     ctxComp.fillText(l, x-10, ht-25);
   }
   
-  // Faixa do visível (380-750 nm)
-  const lambdaMin = 100e-9, lambdaMaxR = 3000e-9;
   const xVis1 = 50 + (w-70) * (380e-9 - lambdaMin)/(lambdaMaxR - lambdaMin);
   const xVis2 = 50 + (w-70) * (750e-9 - lambdaMin)/(lambdaMaxR - lambdaMin);
   ctxComp.fillStyle = 'rgba(255,255,255,0.1)';
@@ -273,7 +402,6 @@ function desenharComparativo() {
   ctxComp.font = '10px Poppins';
   ctxComp.fillText('VISÍVEL', (xVis1+xVis2)/2 - 20, 35);
   
-  // Desenhar cada curva
   let BglobalMax = 0;
   const curvas = [];
   
@@ -290,7 +418,6 @@ function desenharComparativo() {
     curvas.push({...c, pontos, Bmax});
   });
   
-  // Normalizar e desenhar
   curvas.forEach(c => {
     ctxComp.strokeStyle = c.cor;
     ctxComp.lineWidth = 3;
@@ -302,7 +429,6 @@ function desenharComparativo() {
     });
     ctxComp.stroke();
     
-    // Marcar pico
     const lambdaMax = 2.898e-3 / c.T;
     const xPico = 50 + (w-70) * (lambdaMax - lambdaMin)/(lambdaMaxR - lambdaMin);
     const yPico = ht - 40 - (ht-60) * (c.Bmax / BglobalMax);
@@ -311,7 +437,6 @@ function desenharComparativo() {
     ctxComp.arc(xPico, yPico, 5, 0, 2*Math.PI);
     ctxComp.fill();
     
-    // Legenda no gráfico
     ctxComp.fillStyle = c.cor;
     ctxComp.font = 'bold 12px Poppins';
     ctxComp.fillText(c.nome, xPico + 8, yPico - 5);
@@ -338,7 +463,6 @@ function desenharPiscina() {
   valorIrrad.textContent = irrad;
   valorHora.textContent = hora;
   
-  // Céu
   const grad = ctxPis.createLinearGradient(0,0,0,ht/2);
   if (hora < 7 || hora > 18) {
     grad.addColorStop(0,'#001a33'); grad.addColorStop(1,'#003366');
@@ -350,7 +474,6 @@ function desenharPiscina() {
   ctxPis.fillStyle = grad;
   ctxPis.fillRect(0,0,w,ht/2);
   
-  // Sol
   const xSol = w * (hora-6)/12;
   const ySol = ht/2 - Math.sin((hora-6)/12 * Math.PI) * ht/3;
   ctxPis.fillStyle = '#ffd60a';
@@ -358,11 +481,9 @@ function desenharPiscina() {
   ctxPis.arc(xSol, ySol, 25, 0, 2*Math.PI);
   ctxPis.fill();
   
-  // Piscina
   ctxPis.fillStyle = '#0077b6';
   ctxPis.fillRect(50, ht/2, w-100, ht/2 - 20);
   
-  // Ondas animadas
   ctxPis.strokeStyle = 'rgba(255,255,255,0.5)';
   ctxPis.lineWidth = 2;
   for (let i = 0; i < 3; i++) {
@@ -374,7 +495,6 @@ function desenharPiscina() {
     ctxPis.stroke();
   }
   
-  // Temperatura estimada
   const Tbase = 20;
   const ganho = (irrad / 1000) * Math.sin((hora-6)/12 * Math.PI) * 12;
   const Tfinal = (Tbase + ganho).toFixed(1);
@@ -391,7 +511,7 @@ horaSlider.addEventListener('input', desenharPiscina);
 setInterval(desenharPiscina, 500);
 desenharPiscina();
 
-/* ============ 🆕 CALCULADORA DE ECONOMIA ENERGÉTICA ============ */
+/* ============ CALCULADORA DE ECONOMIA ============ */
 const btnCalcular = document.getElementById('btnCalcular');
 const resultadoCalc = document.getElementById('resultadoCalc');
 const calcResultados = document.querySelector('.calc-resultados');
@@ -399,52 +519,40 @@ const calcResultados = document.querySelector('.calc-resultados');
 btnCalcular.addEventListener('click', calcularEconomia);
 
 function calcularEconomia() {
-  // Ler inputs
-  const V = parseFloat(document.getElementById('calcVolume').value);          // m³
-  const T_atual = parseFloat(document.getElementById('calcTempAtual').value); // °C
-  const T_desejada = parseFloat(document.getElementById('calcTempDesejada').value); // °C
-  const area = parseFloat(document.getElementById('calcArea').value);         // m²
+  const V = parseFloat(document.getElementById('calcVolume').value);
+  const T_atual = parseFloat(document.getElementById('calcTempAtual').value);
+  const T_desejada = parseFloat(document.getElementById('calcTempDesejada').value);
+  const area = parseFloat(document.getElementById('calcArea').value);
   const eficiencia = parseFloat(document.getElementById('calcEficiencia').value) / 100;
-  const horasSol = parseFloat(document.getElementById('calcHorasSol').value); // h/dia
-  const irrad = parseFloat(document.getElementById('calcIrrad').value);       // W/m²
-  const custoKwh = parseFloat(document.getElementById('calcCustoKwh').value); // R$/kWh
+  const horasSol = parseFloat(document.getElementById('calcHorasSol').value);
+  const irrad = parseFloat(document.getElementById('calcIrrad').value);
+  const custoKwh = parseFloat(document.getElementById('calcCustoKwh').value);
   
-  // Validação
   if (T_desejada <= T_atual) {
-    alert('⚠️ A temperatura desejada deve ser maior que a atual!');
+    mostrarToast('⚠️ Temperatura desejada deve ser maior que a atual!');
     return;
   }
   
-  // Física: Q = ρ · V · c · ΔT
-  const rho = 1000;        // kg/m³ (densidade da água)
-  const c = 4186;          // J/(kg·K) (calor específico da água)
+  const rho = 1000;
+  const c = 4186;
   const deltaT = T_desejada - T_atual;
   
-  const Q_joules = rho * V * c * deltaT;           // Energia total em Joules
-  const Q_kwh = Q_joules / 3.6e6;                  // Converter para kWh
+  const Q_joules = rho * V * c * deltaT;
+  const Q_kwh = Q_joules / 3.6e6;
   
-  // Energia solar captada por dia (em kWh)
-  // E_solar = irradiação (W/m²) × área (m²) × horas × eficiência / 1000
-  const E_solar_diaria = (irrad * area * horasSol * eficiencia) / 1000; // kWh/dia
-  
-  // Tempo para aquecer com solar (dias)
+  const E_solar_diaria = (irrad * area * horasSol * eficiencia) / 1000;
   const dias_para_aquecer = Q_kwh / E_solar_diaria;
   
-  // Economia mensal (considerando manutenção da temperatura)
-  // Perdas diárias estimadas: ~1°C por dia sem cobertura → repôr com ΔT = 1°C
-  const Q_perda_diaria = (rho * V * c * 1) / 3.6e6; // kWh para repor 1°C
-  const E_solar_mensal = E_solar_diaria * 30;       // kWh/mês
-  const Q_perda_mensal = Q_perda_diaria * 30;       // kWh/mês necessários
+  const Q_perda_diaria = (rho * V * c * 1) / 3.6e6;
+  const E_solar_mensal = E_solar_diaria * 30;
+  const Q_perda_mensal = Q_perda_diaria * 30;
   
-  // Fração solar (quanto do aquecimento é coberto pelo sol)
   const fracao_solar = Math.min(1, E_solar_mensal / Q_perda_mensal);
   const economia_mensal_kwh = Q_perda_mensal * fracao_solar;
   const economia_mensal_r$ = economia_mensal_kwh * custoKwh;
   
-  // CO₂ evitado (fator: 0,1 kg CO₂/kWh no Brasil - média)
   const co2_evitado = economia_mensal_kwh * 0.1;
   
-  // Exibir resultados
   resultadoCalc.hidden = false;
   calcResultados.innerHTML = `
     <div class="calc-card">
@@ -490,4 +598,26 @@ function calcularEconomia() {
   `;
   
   resultadoCalc.scrollIntoView({behavior: 'smooth', block: 'center'});
+  mostrarToast('✅ Cálculo concluído!');
 }
+
+/* 🆕 PWA - REGISTRO DO SERVICE WORKER */
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('sw.js')
+      .then(reg => console.log('✅ Service Worker registrado'))
+      .catch(err => console.log('⚠️ SW falhou:', err));
+  });
+}
+
+/* 🆕 DICA DE INSTALAÇÃO PWA */
+let deferredPrompt;
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  deferredPrompt = e;
+  setTimeout(() => {
+    if (deferredPrompt && !window.matchMedia('(display-mode: standalone)').matches) {
+      mostrarToast('📱 Toque no menu do navegador para instalar o app!');
+    }
+  }, 3000);
+});

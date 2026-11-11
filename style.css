@@ -11,6 +11,9 @@
   --sombra: 0 6px 20px rgba(0,0,0,0.15);
   --fonte-base: 'Poppins', system-ui, sans-serif;
   --tamanho-base: 16px;
+  --bg-body: linear-gradient(135deg, #caf0f8 0%, #ffe8b3 100%);
+  --bg-section: #ffffff;
+  --bg-simulador: #f4f4f8;
 }
 
 /* Modo alto contraste */
@@ -23,11 +26,45 @@ body.alto-contraste {
   --preto: #fff;
   --cinza: #000;
   --texto: #fff;
+  --bg-body: #000;
+  --bg-section: #000;
+  --bg-simulador: #000;
   background: #000 !important;
   color: #fff !important;
 }
 body.alto-contraste * { border-color: #fff !important; }
 body.alto-contraste canvas { background:#000 !important; }
+
+/* 🆕 Modo escuro */
+body.dark-mode {
+  --azul-agua: #4da6ff;
+  --azul-claro: #1e3a5f;
+  --laranja-sol: #ff9e00;
+  --amarelo-sol: #ffd60a;
+  --branco: #1a1a2e;
+  --preto: #f4f4f8;
+  --cinza: #2a2a3e;
+  --texto: #e0e0e0;
+  --bg-body: linear-gradient(135deg, #0a0a1e 0%, #1a1a3e 100%);
+  --bg-section: #1e1e2e;
+  --bg-simulador: #2a2a3e;
+}
+body.dark-mode {
+  background: var(--bg-body) !important;
+  color: var(--texto) !important;
+}
+body.dark-mode section { background: var(--bg-section); }
+body.dark-mode .simulador { background: var(--bg-simulador); }
+body.dark-mode .calc-grid label { background: #2a2a3e; color: #e0e0e0; border-color: #1e3a5f; }
+body.dark-mode .calc-grid small { color: #aaa; }
+body.dark-mode .resultado-calc { background: #2a2a3e; }
+body.dark-mode .info-comparativo { background: #2a2a3e; }
+body.dark-mode .dica, body.dark-mode .nota-libras { background: #2a2a3e; color: #e0e0e0; }
+body.dark-mode .formula { background: #2a2a3e; }
+body.dark-mode .formula-destaque { background: #3a2a1e; }
+body.dark-mode .calc-card { background: linear-gradient(135deg, #1e3a5f, #3a2a1e); color: #fff; }
+body.dark-mode .calc-card .unidade { color: #ccc; }
+body.dark-mode table tr:nth-child(even) { background: #2a2a3e; }
 
 /* Modo dislexia */
 body.dislexia {
@@ -43,10 +80,11 @@ html { scroll-behavior: smooth; }
 body {
   font-family: var(--fonte-base);
   font-size: var(--tamanho-base);
-  background: linear-gradient(135deg, #caf0f8 0%, #ffe8b3 100%);
+  background: var(--bg-body);
   color: var(--texto);
   line-height: 1.6;
   min-height: 100vh;
+  transition: background .3s, color .3s;
 }
 
 /* Acessibilidade: esconder visualmente mas manter para leitores de tela */
@@ -119,37 +157,44 @@ nav a:hover, nav a:focus {
   color: var(--branco);
   padding: .6rem 1rem;
   display: flex;
-  gap: .6rem;
+  gap: .5rem;
   flex-wrap: wrap;
   justify-content: center;
-  font-size: .9rem;
+  font-size: .85rem;
 }
 .acessibilidade button {
   background: var(--laranja-sol);
   color: #000;
   border: none;
-  padding: .4rem .8rem;
+  padding: .4rem .7rem;
   border-radius: 6px;
   cursor: pointer;
   font-weight: 600;
   font-family: inherit;
+  font-size: .85rem;
+  transition: transform .2s, background .2s;
 }
 .acessibilidade button:hover,
 .acessibilidade button:focus {
   outline: 3px solid var(--amarelo-sol);
   transform: scale(1.05);
 }
+.acessibilidade button.ativo {
+  background: var(--amarelo-sol);
+  box-shadow: 0 0 10px var(--amarelo-sol);
+}
 
 /* ============ MAIN ============ */
 main { max-width: 1200px; margin: 0 auto; padding: 2rem 1rem; }
 
 section {
-  background: var(--branco);
+  background: var(--bg-section);
   border-radius: 16px;
   padding: 2rem;
   margin-bottom: 2rem;
   box-shadow: var(--sombra);
   scroll-margin-top: 140px;
+  transition: background .3s;
 }
 section h2 {
   color: var(--azul-agua);
@@ -167,6 +212,17 @@ section p { margin-bottom: 1rem; text-align: justify; }
 section ul { margin: .8rem 0 1rem 1.5rem; }
 section li { margin-bottom: .4rem; }
 
+/* ============ 🆕 ANIMAÇÕES DE ENTRADA (SCROLL REVEAL) ============ */
+.reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+.reveal.visivel {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 /* ============ HERO ============ */
 .hero {
   background: linear-gradient(135deg, var(--azul-agua), var(--laranja-sol));
@@ -177,7 +233,15 @@ section li { margin-bottom: .4rem; }
   margin-bottom: 2rem;
 }
 .hero h1 { font-size: 2.2rem; margin-bottom: 1rem; }
-.hero p { font-size: 1.1rem; max-width: 800px; margin: 0 auto; }
+.hero p { font-size: 1.1rem; max-width: 800px; margin: 0 auto 1rem; }
+.pwa-hint {
+  background: rgba(255,255,255,0.2);
+  padding: .8rem;
+  border-radius: 8px;
+  display: inline-block;
+  font-size: .95rem;
+  margin-top: 1rem;
+}
 
 /* ============ FÓRMULAS ============ */
 .formula {
@@ -185,7 +249,7 @@ section li { margin-bottom: .4rem; }
   font-size: 1.2rem;
   font-weight: 700;
   color: var(--azul-agua);
-  background: var(--cinza);
+  background: var(--bg-simulador);
   padding: 1rem;
   border-radius: 8px;
   margin: 1rem 0;
@@ -202,14 +266,16 @@ section li { margin-bottom: .4rem; }
   border-left: 5px solid var(--laranja-sol);
   margin: 1rem 0;
 }
+body.dark-mode .formula-destaque { color: var(--amarelo-sol); }
 
 /* ============ SIMULADORES ============ */
 .simulador {
-  background: var(--cinza);
+  background: var(--bg-simulador);
   padding: 1.2rem;
   border-radius: 12px;
   margin: 1rem 0;
   border: 2px solid var(--azul-claro);
+  transition: background .3s;
 }
 .simulador canvas {
   width: 100%;
@@ -310,6 +376,9 @@ tr:nth-child(even) { background: var(--cinza); }
   background: linear-gradient(135deg, #fff8e1, #e3f2fd);
   border: 3px solid var(--laranja-sol);
 }
+body.dark-mode .calculadora {
+  background: linear-gradient(135deg, #3a2a1e, #1e3a5f);
+}
 .calc-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -406,43 +475,6 @@ tr:nth-child(even) { background: var(--cinza); }
 .calc-card.destaque .numero { color: #000; }
 .calc-card.destaque .unidade { color: #333; }
 
-/* ============ VÍDEOS EM LIBRAS ============ */
-.grid-videos {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 1.5rem;
-  margin: 1.5rem 0;
-}
-.video-card {
-  background: var(--cinza);
-  padding: 1rem;
-  border-radius: 12px;
-  border: 2px solid var(--azul-claro);
-  text-align: center;
-}
-.video-card video {
-  width: 100%;
-  border-radius: 8px;
-  background: #000;
-  aspect-ratio: 16/9;
-}
-.video-card h4 {
-  margin-top: .8rem;
-  color: var(--azul-agua);
-}
-.video-card p {
-  font-size: .9rem;
-  text-align: center;
-  margin: .4rem 0 0;
-}
-.nota-libras {
-  background: #fff8e1;
-  padding: 1rem;
-  border-radius: 8px;
-  border-left: 4px solid var(--amarelo-sol);
-  font-size: .95rem;
-}
-
 /* ============ MAPA DO SITE ============ */
 .mapa-site ul {
   list-style: none;
@@ -467,6 +499,27 @@ footer {
 }
 footer a { color: var(--amarelo-sol); }
 
+/* ============ 🆕 TOAST DE NOTIFICAÇÃO ============ */
+.toast {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: var(--azul-agua);
+  color: white;
+  padding: 1rem 1.5rem;
+  border-radius: 10px;
+  box-shadow: var(--sombra);
+  z-index: 9999;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity .3s, transform .3s;
+  max-width: 300px;
+}
+.toast.visivel {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 /* ============ RESPONSIVIDADE ============ */
 @media (max-width: 700px) {
   .hero h1 { font-size: 1.6rem; }
@@ -477,10 +530,17 @@ footer a { color: var(--amarelo-sol); }
   .controles input[type="range"] { width: 150px; }
   .formula, .formula-destaque { font-size: 1rem; }
   .calc-card .numero { font-size: 1.4rem; }
+  .acessibilidade button { font-size: .75rem; padding: .3rem .5rem; }
 }
 
 /* Foco visível para navegação por teclado */
 *:focus-visible {
   outline: 3px solid var(--laranja-sol);
   outline-offset: 2px;
+}
+
+/* Preferência de movimento reduzido */
+@media (prefers-reduced-motion: reduce) {
+  .reveal { opacity: 1; transform: none; transition: none; }
+  * { animation: none !important; transition: none !important; }
 }
