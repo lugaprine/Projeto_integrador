@@ -7,22 +7,27 @@
 <meta name="theme-color" content="#0077b6" />
 <title>Luz, Calor e Água — Projeto Integrador CEP</title>
 
-<!-- PWA -->
 <link rel="manifest" href='data:application/manifest+json,{"name":"Luz Calor e Agua CEP","short_name":"CEP","start_url":".","display":"standalone","background_color":"%23caf0f8","theme_color":"%230077b6","icons":[{"src":"data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Ctext y=%22.9em%22 font-size=%2290%22%3E%F0%9F%8C%9E%3C/text%3E%3C/svg%3E","sizes":"192x192","type":"image/svg+xml"}]}' />
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌞</text></svg>">
 
-<!-- Fontes -->
 <link href="https://fonts.cdnfonts.com/css/opendyslexic" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800;900&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
 
-<!-- CSS externo -->
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
 <a href="#conteudo" class="skip-link">Pular para o conteúdo principal</a>
 
-<!-- WIDGET VLIBRAS -->
+<!-- Partículas de fundo -->
+<div class="particulas" aria-hidden="true"></div>
+
+<!-- Blobs decorativos -->
+<div class="blob blob-1" aria-hidden="true"></div>
+<div class="blob blob-2" aria-hidden="true"></div>
+<div class="blob blob-3" aria-hidden="true"></div>
+
+<!-- VLIBRAS -->
 <div vw class="enabled">
   <div vw-access-button class="active"></div>
   <div vw-plugin-wrapper>
@@ -44,9 +49,12 @@
 </div>
 
 <!-- HEADER -->
-<header>
+<header id="header">
   <div class="header-inner">
-    <div class="logo"><span>🌞💧</span> Luz, Calor & Água</div>
+    <div class="logo">
+      <span class="logo-sol">🌞</span>
+      <span class="logo-texto">Luz, Calor <span class="ampersand">&</span> Água</span>
+    </div>
     <nav aria-label="Menu principal">
       <ul>
         <li><a href="#desafio">Desafio</a></li>
@@ -56,7 +64,6 @@
         <li><a href="#comparativo">Comparativo</a></li>
         <li><a href="#piscina">Piscina</a></li>
         <li><a href="#calculadora">Calculadora</a></li>
-        <li><a href="#mapa">Mapa</a></li>
       </ul>
     </nav>
   </div>
@@ -66,263 +73,375 @@
 
   <!-- HERO -->
   <div class="hero reveal">
-    <h1>🌊 Projeto Integrador CEP — 3º Trimestre 🌞</h1>
-    <p>Um site educacional, interativo e 100% acessível que une <strong>Programação</strong>, <strong>Tecnociência</strong> (refração luminosa) e <strong>Robótica</strong> (radiação do corpo negro), aplicados ao <strong>Projeto da Piscina</strong>.</p>
-    <p class="pwa-hint">📱 <strong>Dica:</strong> Este site pode ser instalado no celular! Use "Adicionar à tela inicial" no menu do navegador.</p>
+    <div class="hero-sol" aria-hidden="true">
+      <div class="sol-nucleo"></div>
+      <div class="sol-brilho"></div>
+    </div>
+    <div class="hero-conteudo">
+      <span class="hero-badge">🎓 Projeto Integrador CEP • 3º Trimestre 2026</span>
+      <h1 class="hero-titulo">
+        <span class="titulo-linha-1">Luz</span>
+        <span class="titulo-linha-2">Calor</span>
+        <span class="titulo-linha-3">& Água</span>
+      </h1>
+      <p class="hero-descricao">Um site educacional, interativo e 100% acessível que une <strong>Programação</strong>, <strong>Tecnociência</strong> (refração luminosa) e <strong>Robótica</strong> (radiação do corpo negro), aplicados ao <strong>Projeto da Piscina</strong>.</p>
+      <div class="hero-botoes">
+        <a href="#tecnociencia" class="btn btn-primario">🌈 Explorar Ciência</a>
+        <a href="#calculadora" class="btn btn-secundario">🧮 Calcular Economia</a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat"><span class="stat-numero">5</span><span class="stat-label">Simuladores</span></div>
+        <div class="stat"><span class="stat-numero">100%</span><span class="stat-label">Acessível</span></div>
+        <div class="stat"><span class="stat-numero">40%</span><span class="stat-label">Economia</span></div>
+      </div>
+    </div>
+    <div class="hero-ondas" aria-hidden="true">
+      <svg viewBox="0 0 1440 120" preserveAspectRatio="none">
+        <path d="M0,60 C240,120 480,0 720,60 C960,120 1200,0 1440,60 L1440,120 L0,120 Z" fill="rgba(255,255,255,0.1)"></path>
+        <path d="M0,80 C240,20 480,100 720,60 C960,20 1200,100 1440,60 L1440,120 L0,120 Z" fill="rgba(255,255,255,0.15)"></path>
+      </svg>
+    </div>
   </div>
 
   <!-- DESAFIO -->
-  <section id="desafio" class="reveal" aria-labelledby="titulo-desafio">
-    <h2 id="titulo-desafio">🎯 O Desafio</h2>
+  <section id="desafio" class="secao reveal" aria-labelledby="titulo-desafio">
+    <div class="secao-cabecalho">
+      <span class="secao-icone">🎯</span>
+      <div>
+        <span class="secao-tag">Introdução</span>
+        <h2 id="titulo-desafio">O Desafio</h2>
+      </div>
+    </div>
     <p>Desenvolver um site educacional que integre três áreas do conhecimento em torno de um problema real: <strong>como aquecer e manter uma piscina de forma sustentável</strong>, usando conceitos da física da luz e do calor.</p>
-    <h3>Áreas integradas</h3>
-    <ul>
-      <li><strong>Programação:</strong> construção do site, simuladores e interatividade.</li>
-      <li><strong>Tecnociência:</strong> dispersão luminosa por refração (como a luz muda de direção e se separa em cores ao passar de um meio para outro).</li>
-      <li><strong>Robótica:</strong> radiação do corpo negro (como a temperatura define a cor e a energia emitida).</li>
-    </ul>
-    <h3>Conexão com o Projeto da Piscina</h3>
-    <p>O Sol é um corpo negro a ~5800 K. Ele emite radiação que, ao entrar na água da piscina, sofre <strong>refração</strong> e se separa em cores (dispersão cromática). Essa mesma radiação é absorvida pela água, aquecendo-a. Nosso site mostra, com simuladores, como essa física se aplica no dia a dia.</p>
+    
+    <div class="cards-integracao">
+      <div class="card-integracao card-programacao">
+        <span class="card-int-icone">💻</span>
+        <h3>Programação</h3>
+        <p>Construção do site, simuladores e interatividade.</p>
+      </div>
+      <div class="card-integracao card-tecnociencia">
+        <span class="card-int-icone">🌈</span>
+        <h3>Tecnociência</h3>
+        <p>Dispersão luminosa por refração — como a luz se separa em cores.</p>
+      </div>
+      <div class="card-integracao card-robotica">
+        <span class="card-int-icone">🤖</span>
+        <h3>Robótica</h3>
+        <p>Radiação do corpo negro — como a temperatura define a cor.</p>
+      </div>
+    </div>
+
+    <h3>🔗 Conexão com o Projeto da Piscina</h3>
+    <p>O Sol é um corpo negro a ~5800 K. Ele emite radiação que, ao entrar na água da piscina, sofre <strong>refração</strong> e se separa em cores (dispersão cromática). Essa mesma radiação é absorvida pela água, aquecendo-a.</p>
   </section>
 
   <!-- PROGRAMAÇÃO -->
-  <section id="programacao" class="reveal" aria-labelledby="titulo-prog">
-    <h2 id="titulo-prog">💻 Programação</h2>
-    <p>O site foi construído com <strong>HTML5 semântico</strong>, <strong>CSS3 responsivo (mobile-first)</strong> e <strong>JavaScript puro</strong> para os simuladores. Utilizamos a tag <code>&lt;canvas&gt;</code> para renderizar gráficos científicos em tempo real.</p>
-    <h3>Tecnologias utilizadas</h3>
-    <ul>
-      <li>HTML5 com tags semânticas (<code>&lt;header&gt;</code>, <code>&lt;nav&gt;</code>, <code>&lt;main&gt;</code>, <code>&lt;section&gt;</code>).</li>
-      <li>CSS Grid e Flexbox para layout responsivo.</li>
-      <li>Canvas API para simulações gráficas.</li>
-      <li>ARIA labels e navegação por teclado para acessibilidade.</li>
-      <li>Widget VLibras para tradução em Libras.</li>
-      <li>Web Speech API para narração em áudio.</li>
-      <li>Service Worker para funcionar offline (PWA).</li>
-    </ul>
-    <h3>Automação e Sustentabilidade</h3>
-    <p>O projeto propõe um sistema automatizado que calcula, em tempo real, a <strong>temperatura ideal da piscina</strong> com base na irradiância solar (corpo negro) e na cor da luz absorvida (refração), reduzindo o uso de energia elétrica em até <strong>40%</strong>.</p>
+  <section id="programacao" class="secao reveal" aria-labelledby="titulo-prog">
+    <div class="secao-cabecalho">
+      <span class="secao-icone">💻</span>
+      <div>
+        <span class="secao-tag">Desenvolvimento</span>
+        <h2 id="titulo-prog">Programação</h2>
+      </div>
+    </div>
+    <p>O site foi construído com <strong>HTML5 semântico</strong>, <strong>CSS3 responsivo</strong> e <strong>JavaScript puro</strong>. Utilizamos <code>&lt;canvas&gt;</code> para renderizar gráficos científicos em tempo real.</p>
+    
+    <div class="tech-grid">
+      <div class="tech-item"><span class="tech-icone">📄</span><strong>HTML5</strong><small>Semântico</small></div>
+      <div class="tech-item"><span class="tech-icone">🎨</span><strong>CSS3</strong><small>Responsivo</small></div>
+      <div class="tech-item"><span class="tech-icone">⚡</span><strong>JavaScript</strong><small>Puro</small></div>
+      <div class="tech-item"><span class="tech-icone">🖼️</span><strong>Canvas API</strong><small>Simulações</small></div>
+      <div class="tech-item"><span class="tech-icone">♿</span><strong>ARIA</strong><small>Acessível</small></div>
+      <div class="tech-item"><span class="tech-icone">🤟</span><strong>VLibras</strong><small>Libras</small></div>
+    </div>
+
+    <div class="destaque-box">
+      <span class="destaque-icone">🌱</span>
+      <div>
+        <h3>Automação e Sustentabilidade</h3>
+        <p>O projeto propõe um sistema automatizado que calcula, em tempo real, a <strong>temperatura ideal da piscina</strong> com base na irradiância solar e na cor da luz absorvida, reduzindo o uso de energia elétrica em até <strong>40%</strong>.</p>
+      </div>
+    </div>
   </section>
 
   <!-- TECENCIÊNCIA - REFRAÇÃO -->
-  <section id="tecnociencia" class="reveal" aria-labelledby="titulo-tec">
-    <h2 id="titulo-tec">🌈 Tecnociência — Dispersão Luminosa por Refração</h2>
+  <section id="tecnociencia" class="secao reveal" aria-labelledby="titulo-tec">
+    <div class="secao-cabecalho">
+      <span class="secao-icone">🌈</span>
+      <div>
+        <span class="secao-tag">Física da Luz</span>
+        <h2 id="titulo-tec">Dispersão Luminosa por Refração</h2>
+      </div>
+    </div>
     <p>Quando a luz passa de um meio para outro (como do ar para a água), ela muda de direção — isso é <strong>refração</strong>. Como cada cor tem um índice de refração ligeiramente diferente, a luz branca se separa em todas as cores do arco-íris: isso é <strong>dispersão cromática</strong>.</p>
     
-    <h3>O que é refração?</h3>
-    <p>A refração é a mudança de direção da luz ao passar de um meio transparente para outro com densidade óptica diferente. A Lei de Snell descreve esse fenômeno:</p>
-    <p class="formula">n₁ · sin(θ₁) = n₂ · sin(θ₂)</p>
-    <p>Onde: <strong>n₁</strong> = índice de refração do meio 1, <strong>θ₁</strong> = ângulo de incidência, <strong>n₂</strong> = índice de refração do meio 2, <strong>θ₂</strong> = ângulo de refração.</p>
+    <h3>📐 Lei de Snell</h3>
+    <p>A refração é descrita pela Lei de Snell:</p>
+    <div class="formula-box">
+      <span class="formula">n₁ · sin(θ₁) = n₂ · sin(θ₂)</span>
+      <p class="formula-legenda">Onde: <strong>n₁</strong> = índice do meio 1, <strong>θ₁</strong> = ângulo de incidência, <strong>n₂</strong> = índice do meio 2, <strong>θ₂</strong> = ângulo de refração.</p>
+    </div>
 
-    <h3>Índices de refração</h3>
-    <table>
-      <caption class="sr-only">Índices de refração de diferentes materiais</caption>
-      <tr><th>Material</th><th>Índice de refração (n)</th></tr>
-      <tr><td>Ar</td><td>1,000</td></tr>
-      <tr><td>Água</td><td>1,333</td></tr>
-      <tr><td>Vidro</td><td>1,500 – 1,540</td></tr>
-      <tr><td>Diamante</td><td>2,417</td></tr>
-    </table>
+    <h3>🔬 Índices de refração</h3>
+    <div class="tabela-wrapper">
+      <table>
+        <tr><th>Material</th><th>Índice (n)</th></tr>
+        <tr><td>Ar</td><td>1,000</td></tr>
+        <tr><td>Água</td><td>1,333</td></tr>
+        <tr><td>Vidro</td><td>1,500 – 1,540</td></tr>
+        <tr><td>Diamante</td><td>2,417</td></tr>
+      </table>
+    </div>
 
-    <h3>Dispersão cromática na água</h3>
-    <p>Na água, cada cor tem um índice de refração ligeiramente diferente:</p>
-    <table>
-      <tr><th>Cor</th><th>Comprimento de onda (nm)</th><th>Índice na água</th></tr>
-      <tr><td style="color:#ff0000">Vermelho</td><td>620 – 750</td><td>1,331</td></tr>
-      <tr><td style="color:#ff8800">Laranja</td><td>590 – 620</td><td>1,332</td></tr>
-      <tr><td style="color:#ccaa00">Amarelo</td><td>570 – 590</td><td>1,333</td></tr>
-      <tr><td style="color:#00aa00">Verde</td><td>495 – 570</td><td>1,335</td></tr>
-      <tr><td style="color:#0000ff">Azul</td><td>450 – 495</td><td>1,337</td></tr>
-      <tr><td style="color:#8b00ff">Violeta</td><td>380 – 450</td><td>1,343</td></tr>
-    </table>
+    <h3>🌡️ Dispersão cromática na água</h3>
+    <div class="tabela-wrapper">
+      <table>
+        <tr><th>Cor</th><th>λ (nm)</th><th>Índice</th></tr>
+        <tr><td><span class="cor-ponto" style="background:#ff0000"></span>Vermelho</td><td>620 – 750</td><td>1,331</td></tr>
+        <tr><td><span class="cor-ponto" style="background:#ff8800"></span>Laranja</td><td>590 – 620</td><td>1,332</td></tr>
+        <tr><td><span class="cor-ponto" style="background:#ccaa00"></span>Amarelo</td><td>570 – 590</td><td>1,333</td></tr>
+        <tr><td><span class="cor-ponto" style="background:#00aa00"></span>Verde</td><td>495 – 570</td><td>1,335</td></tr>
+        <tr><td><span class="cor-ponto" style="background:#0000ff"></span>Azul</td><td>450 – 495</td><td>1,337</td></tr>
+        <tr><td><span class="cor-ponto" style="background:#8b00ff"></span>Violeta</td><td>380 – 450</td><td>1,343</td></tr>
+      </table>
+    </div>
 
-    <h3>🎮 Simulador: Refração da Luz na Água</h3>
     <div class="simulador">
-      <p>Ajuste o ângulo de incidência e veja como a luz branca se refrata e se separa em cores ao entrar na água:</p>
+      <div class="simulador-header">
+        <span class="simulador-badge">🎮 Simulador Interativo</span>
+        <h3>Refração da Luz na Água</h3>
+      </div>
+      <p>Ajuste o ângulo de incidência e veja como a luz branca se refrata e se separa em cores:</p>
       <canvas id="canvasRefracao" width="600" height="350" aria-label="Simulação de refração e dispersão da luz na água"></canvas>
       <div class="controles">
         <label>
-          Ângulo de incidência: <span class="valor" id="valorAngulo">30</span>°
-          <input type="range" id="angulo" min="0" max="85" value="30" aria-label="Ângulo de incidência em graus">
+          <span>Ângulo: <span class="valor" id="valorAngulo">30</span>°</span>
+          <input type="range" id="angulo" min="0" max="85" value="30" aria-label="Ângulo de incidência">
         </label>
         <label>
-          Meio:
+          <span>Meio:</span>
           <select id="meio" aria-label="Material do segundo meio">
-            <option value="1.333">Água (n=1,333)</option>
-            <option value="1.520">Vidro (n=1,520)</option>
-            <option value="2.417">Diamante (n=2,417)</option>
+            <option value="1.333">💧 Água (n=1,333)</option>
+            <option value="1.520">🪟 Vidro (n=1,520)</option>
+            <option value="2.417">💎 Diamante (n=2,417)</option>
           </select>
         </label>
       </div>
-      <p class="dica">💡 Quanto maior o ângulo de incidência, maior a separação entre as cores. No diamante, a dispersão é tão forte que cria o "fogo" das pedras preciosas!</p>
+      <p class="dica">💡 Quanto maior o ângulo ou maior o índice do meio, maior a separação entre as cores!</p>
     </div>
 
-    <h3>🎨 Simulador: Prisma — Decomposição da Luz Branca</h3>
     <div class="simulador">
-      <p>A luz branca é composta por todas as cores do espectro. Ao passar por um prisma de vidro, cada cor sofre um ângulo de refração diferente — isso é <strong>dispersão</strong>.</p>
+      <div class="simulador-header">
+        <span class="simulador-badge">🎨 Simulador Interativo</span>
+        <h3>Prisma — Decomposição da Luz</h3>
+      </div>
+      <p>A luz branca é composta por todas as cores. Ao passar por um prisma, cada cor sofre refração diferente.</p>
       <canvas id="canvasPrisma" width="600" height="280" aria-label="Simulação de decomposição da luz branca por um prisma"></canvas>
       <div class="controles">
         <label>
-          Intensidade da luz: <span class="valor" id="valorIntensidade">100</span>%
+          <span>Intensidade: <span class="valor" id="valorIntensidade">100</span>%</span>
           <input type="range" id="intensidade" min="10" max="100" value="100" aria-label="Intensidade da luz">
         </label>
       </div>
     </div>
-
-    <h3>Aplicação na Piscina</h3>
-    <p>Quando a luz do Sol entra na piscina, ela sofre refração na superfície da água. Isso faz com que:</p>
-    <ul>
-      <li>Objetos submersos pareçam estar em posição diferente da real.</li>
-      <li>A luz se separe em cores, criando efeitos visuais no fundo da piscina.</li>
-      <li>Arco-íris possam ser formados por gotículas de água suspensas no ar.</li>
-    </ul>
   </section>
 
   <!-- ROBÓTICA - CORPO NEGRO -->
-  <section id="robotica" class="reveal" aria-labelledby="titulo-rob">
-    <h2 id="titulo-rob">🤖 Robótica — Radiação do Corpo Negro</h2>
+  <section id="robotica" class="secao reveal" aria-labelledby="titulo-rob">
+    <div class="secao-cabecalho">
+      <span class="secao-icone">🤖</span>
+      <div>
+        <span class="secao-tag">Termodinâmica</span>
+        <h2 id="titulo-rob">Radiação do Corpo Negro</h2>
+      </div>
+    </div>
     <p>Um <strong>corpo negro</strong> é um objeto ideal que absorve toda a radiação que incide sobre ele e emite energia térmica em um espectro característico, dependendo apenas de sua <strong>temperatura</strong>.</p>
 
-    <h3>Lei de Planck</h3>
-    <p>A densidade espectral de energia emitida por um corpo negro é dada por:</p>
-    <p class="formula">B(λ,T) = (2hc²/λ⁵) · 1/(e<sup>hc/λkT</sup> − 1)</p>
-    <p>Onde: <strong>h</strong> = constante de Planck, <strong>c</strong> = velocidade da luz, <strong>k</strong> = constante de Boltzmann, <strong>T</strong> = temperatura em Kelvin.</p>
+    <div class="formula-box">
+      <span class="formula">B(λ,T) = (2hc²/λ⁵) · 1/(e<sup>hc/λkT</sup> − 1)</span>
+      <p class="formula-legenda"><strong>Lei de Planck</strong> — h = Planck, c = luz, k = Boltzmann, T = temperatura (K)</p>
+    </div>
 
-    <h3>Lei de Wien</h3>
-    <p>O pico de emissão se desloca conforme a temperatura:</p>
-    <p class="formula-destaque">λ_max · T = 2,898 × 10⁻³ m·K</p>
-    <p>Quanto mais quente o corpo, menor o comprimento de onda do pico (mais azulado). Quanto mais frio, maior (mais avermelhado).</p>
+    <div class="formula-box destaque">
+      <span class="formula">λ<sub>máx</sub> · T = 2,898 × 10⁻³ m·K</span>
+      <p class="formula-legenda"><strong>Lei de Wien</strong> — Quanto mais quente, menor o λ do pico (mais azulado)</p>
+    </div>
 
-    <h3>🎮 Simulador: Curva de Planck</h3>
     <div class="simulador">
+      <div class="simulador-header">
+        <span class="simulador-badge">🎮 Simulador Interativo</span>
+        <h3>Curva de Planck</h3>
+      </div>
       <p>Arraste a temperatura e veja como muda a cor e a intensidade da radiação emitida:</p>
-      <canvas id="canvasPlanck" width="600" height="300" aria-label="Gráfico da curva de Planck para diferentes temperaturas"></canvas>
+      <canvas id="canvasPlanck" width="600" height="300" aria-label="Gráfico da curva de Planck"></canvas>
       <div class="controles">
         <label>
-          Temperatura: <span class="valor" id="valorTemp">5800</span> K
+          <span>Temperatura: <span class="valor" id="valorTemp">5800</span> K</span>
           <input type="range" id="temp" min="1000" max="12000" value="5800" step="100" aria-label="Temperatura em Kelvin">
         </label>
       </div>
       <p id="corPico" class="info-central"></p>
-      <p class="dica">🌞 O Sol tem ~5800 K. Uma lâmpada incandescente tem ~2800 K. Uma estrela azul pode passar de 10.000 K.</p>
     </div>
 
-    <h3>Aplicação em Robótica</h3>
-    <p>Sensores infravermelhos em robôs medem a radiação emitida por objetos para determinar sua temperatura (pirômetros). Esse princípio é usado em: drones agrícolas, termômetros sem contato, câmeras térmicas e no <strong>controle automático da temperatura da piscina</strong>.</p>
+    <div class="destaque-box">
+      <span class="destaque-icone">🛰️</span>
+      <div>
+        <h3>Aplicação em Robótica</h3>
+        <p>Sensores infravermelhos em robôs medem a radiação emitida por objetos para determinar sua temperatura (pirômetros). Usado em drones agrícolas, termômetros sem contato, câmeras térmicas e no <strong>controle automático da piscina</strong>.</p>
+      </div>
+    </div>
   </section>
 
   <!-- GRÁFICO COMPARATIVO -->
-  <section id="comparativo" class="reveal" aria-labelledby="titulo-comp">
-    <h2 id="titulo-comp">📊 Gráfico Comparativo — Corpos Negros</h2>
-    <p>Compare a radiação emitida por diferentes corpos negros: uma <strong>lâmpada incandescente</strong> (~2800 K), o <strong>Sol</strong> (~5800 K) e uma <strong>estrela azul</strong> (~10.000 K). Ative ou desative cada curva:</p>
+  <section id="comparativo" class="secao reveal" aria-labelledby="titulo-comp">
+    <div class="secao-cabecalho">
+      <span class="secao-icone">📊</span>
+      <div>
+        <span class="secao-tag">Comparação Visual</span>
+        <h2 id="titulo-comp">Corpos Negros Comparados</h2>
+      </div>
+    </div>
+    <p>Compare a radiação emitida por diferentes corpos negros:</p>
 
     <div class="simulador">
+      <div class="simulador-header">
+        <span class="simulador-badge">📈 Gráfico Interativo</span>
+        <h3>Curvas de Planck</h3>
+      </div>
       <canvas id="canvasComparativo" width="600" height="350" aria-label="Gráfico comparativo de curvas de Planck"></canvas>
 
       <div class="controles checkboxes">
-        <label>
-          <input type="checkbox" id="chkLampada" checked> 
+        <label class="check-item check-lampada">
+          <input type="checkbox" id="chkLampada" checked>
           <span class="cor-indicador" style="background:#ff6b35"></span>
-          Lâmpada (2800 K)
+          <span>Lâmpada (2800 K)</span>
         </label>
-        <label>
-          <input type="checkbox" id="chkSol" checked> 
+        <label class="check-item check-sol">
+          <input type="checkbox" id="chkSol" checked>
           <span class="cor-indicador" style="background:#ffd60a"></span>
-          Sol (5800 K)
+          <span>Sol (5800 K)</span>
         </label>
-        <label>
-          <input type="checkbox" id="chkEstrela" checked> 
+        <label class="check-item check-estrela">
+          <input type="checkbox" id="chkEstrela" checked>
           <span class="cor-indicador" style="background:#4da6ff"></span>
-          Estrela Azul (10000 K)
+          <span>Estrela Azul (10000 K)</span>
         </label>
       </div>
 
       <div class="info-comparativo">
         <p><strong>🔍 O que observar:</strong></p>
         <ul>
-          <li>A <strong>lâmpada</strong> emite pico no <em>infravermelho</em> (calor, não visível) → por isso é ineficiente para iluminar.</li>
-          <li>O <strong>Sol</strong> emite pico no <em>visível</em> (~500 nm, verde-amarelo) → ideal para a vida e para aquecer piscinas.</li>
-          <li>A <strong>estrela azul</strong> emite pico no <em>ultravioleta</em> → muito energética, perigosa para a pele.</li>
+          <li>A <strong>lâmpada</strong> emite pico no infravermelho → ineficiente para iluminar.</li>
+          <li>O <strong>Sol</strong> emite pico no visível (~500 nm) → ideal para a vida.</li>
+          <li>A <strong>estrela azul</strong> emite pico no ultravioleta → muito energética.</li>
         </ul>
       </div>
     </div>
   </section>
 
   <!-- PISCINA -->
-  <section id="piscina" class="reveal" aria-labelledby="titulo-piscina">
-    <h2 id="titulo-piscina">🏊 Conexão com o Projeto da Piscina</h2>
-    <p>Todos os conceitos acima se conectam ao <strong>aquecimento sustentável da piscina</strong>:</p>
-    <ul>
-      <li><strong>Sol como corpo negro:</strong> a ~5800 K, o Sol emite pico no visível (~500 nm), que é absorvido pela água.</li>
-      <li><strong>Refração na água:</strong> a luz do Sol muda de direção ao entrar na piscina, criando efeitos visuais e aquecendo a água de forma não uniforme.</li>
-      <li><strong>Aquecimento eficiente:</strong> usando coletores solares que absorvem o espectro visível e infravermelho, é possível elevar a temperatura da água em até 8°C sem eletricidade.</li>
-    </ul>
+  <section id="piscina" class="secao reveal" aria-labelledby="titulo-piscina">
+    <div class="secao-cabecalho">
+      <span class="secao-icone">🏊</span>
+      <div>
+        <span class="secao-tag">Aplicação Real</span>
+        <h2 id="titulo-piscina">Projeto da Piscina</h2>
+      </div>
+    </div>
+    <p>Todos os conceitos se conectam ao <strong>aquecimento sustentável da piscina</strong>:</p>
+    
+    <div class="cards-conexao">
+      <div class="card-conexao">
+        <span class="card-conexao-icone">☀️</span>
+        <h4>Sol como corpo negro</h4>
+        <p>A ~5800 K, emite pico no visível (~500 nm), absorvido pela água.</p>
+      </div>
+      <div class="card-conexao">
+        <span class="card-conexao-icone">💧</span>
+        <h4>Refração na água</h4>
+        <p>A luz muda de direção, criando efeitos visuais no fundo.</p>
+      </div>
+      <div class="card-conexao">
+        <span class="card-conexao-icone">🔥</span>
+        <h4>Aquecimento eficiente</h4>
+        <p>Coletores solares elevam a temperatura em até 8°C sem eletricidade.</p>
+      </div>
+    </div>
 
-    <h3>🎮 Simulador: Temperatura da Piscina</h3>
     <div class="simulador">
+      <div class="simulador-header">
+        <span class="simulador-badge">🎮 Simulador Interativo</span>
+        <h3>Temperatura da Piscina</h3>
+      </div>
       <p>Simule o aquecimento da piscina ao longo de um dia de sol:</p>
-      <canvas id="canvasPiscina" width="600" height="280" aria-label="Simulação de aquecimento da piscina ao longo do dia"></canvas>
+      <canvas id="canvasPiscina" width="600" height="280" aria-label="Simulação de aquecimento da piscina"></canvas>
       <div class="controles">
         <label>
-          Irradiação solar: <span class="valor" id="valorIrrad">800</span> W/m²
-          <input type="range" id="irrad" min="200" max="1100" value="800" aria-label="Irradiação solar em W/m²">
+          <span>Irradiação: <span class="valor" id="valorIrrad">800</span> W/m²</span>
+          <input type="range" id="irrad" min="200" max="1100" value="800" aria-label="Irradiação solar">
         </label>
         <label>
-          Hora do dia: <span class="valor" id="valorHora">12</span>h
+          <span>Hora: <span class="valor" id="valorHora">12</span>h</span>
           <input type="range" id="hora" min="6" max="18" value="12" aria-label="Hora do dia">
         </label>
       </div>
       <p id="infoPiscina" class="info-central"></p>
     </div>
-
-    <h3>💡 Impacto Social e Sustentabilidade</h3>
-    <p>Esse projeto promove:</p>
-    <ul>
-      <li><strong>Inclusão digital:</strong> site acessível a pessoas com deficiência visual, auditiva (Libras) e dislexia.</li>
-      <li><strong>Conscientização ambiental:</strong> uso de energia solar reduz emissão de CO₂.</li>
-      <li><strong>Educação científica:</strong> simuladores que tornam a física tangível.</li>
-    </ul>
   </section>
 
   <!-- CALCULADORA -->
-  <section id="calculadora" class="reveal" aria-labelledby="titulo-calc">
-    <h2 id="titulo-calc">🧮 Calculadora de Economia Energética</h2>
-    <p>Calcule quanto você economizaria ao aquecer sua piscina com <strong>energia solar</strong> em vez de aquecedor elétrico. A física por trás: a energia necessária para aquecer a água é dada por <strong>Q = ρ · V · c · ΔT</strong>.</p>
+  <section id="calculadora" class="secao secao-calculadora reveal" aria-labelledby="titulo-calc">
+    <div class="secao-cabecalho">
+      <span class="secao-icone">🧮</span>
+      <div>
+        <span class="secao-tag">Ferramenta Prática</span>
+        <h2 id="titulo-calc">Calculadora de Economia</h2>
+      </div>
+    </div>
+    <p>Calcule quanto você economizaria ao aquecer sua piscina com <strong>energia solar</strong>. Física: <strong>Q = ρ · V · c · ΔT</strong>.</p>
 
-    <div class="simulador calculadora">
+    <div class="calculadora">
       <div class="calc-grid">
         <label>
-          Volume da piscina (m³):
+          <span class="calc-label">📦 Volume da piscina</span>
           <input type="number" id="calcVolume" value="10" min="1" max="200" step="0.5">
-          <small>Ex: 10 m³ = 10.000 litros</small>
+          <small>m³ (10 m³ = 10.000 L)</small>
         </label>
         <label>
-          Temperatura atual da água (°C):
+          <span class="calc-label">🌡️ Temperatura atual</span>
           <input type="number" id="calcTempAtual" value="20" min="5" max="40" step="0.5">
+          <small>°C</small>
         </label>
         <label>
-          Temperatura desejada (°C):
+          <span class="calc-label">🎯 Temperatura desejada</span>
           <input type="number" id="calcTempDesejada" value="28" min="15" max="40" step="0.5">
+          <small>°C</small>
         </label>
         <label>
-          Área do coletor solar (m²):
+          <span class="calc-label">☀️ Área do coletor</span>
           <input type="number" id="calcArea" value="4" min="0.5" max="30" step="0.5">
-          <small>Regra prática: 1 m² para cada 2–3 m³</small>
+          <small>m² (1 m² / 2-3 m³)</small>
         </label>
         <label>
-          Eficiência do coletor (%):
+          <span class="calc-label">⚡ Eficiência</span>
           <input type="number" id="calcEficiencia" value="60" min="20" max="90" step="5">
+          <small>%</small>
         </label>
         <label>
-          Horas de sol por dia:
+          <span class="calc-label">🕐 Horas de sol/dia</span>
           <input type="number" id="calcHorasSol" value="6" min="1" max="12" step="0.5">
+          <small>horas</small>
         </label>
         <label>
-          Irradiação solar média (W/m²):
+          <span class="calc-label">🌞 Irradiação média</span>
           <input type="number" id="calcIrrad" value="700" min="300" max="1100" step="50">
+          <small>W/m²</small>
         </label>
         <label>
-          Custo do kWh (R$):
+          <span class="calc-label">💰 Custo do kWh</span>
           <input type="number" id="calcCustoKwh" value="0.85" min="0.3" max="2" step="0.05">
+          <small>R$</small>
         </label>
       </div>
 
@@ -336,44 +455,49 @@
   </section>
 
   <!-- CRITÉRIOS -->
-  <section id="criterios" class="reveal" aria-labelledby="titulo-crit">
-    <h2 id="titulo-crit">📊 Critérios de Avaliação</h2>
-    <table>
-      <tr><th>Critério</th><th>Peso</th><th>Como foi atendido</th></tr>
-      <tr><td>Estrutura e Navegação</td><td>10%</td><td>Menu fixo, mapa do site, seções bem organizadas.</td></tr>
-      <tr><td>Design e Responsividade</td><td>15%</td><td>Identidade Sol+Água, mobile-first, alto contraste, dislexia e modo escuro.</td></tr>
-      <tr><td>Profundidade Científica</td><td>30%</td><td>Leis de Planck, Wien e refração (Snell) com fórmulas e explicações.</td></tr>
-      <tr><td>Interatividade e Simuladores</td><td>20%</td><td>5 simuladores em Canvas + calculadora + gráfico comparativo.</td></tr>
-      <tr><td>Acessibilidade e Inclusão</td><td>15%</td><td>VLibras, narração em áudio, alto contraste, dislexia, skip link, ARIA.</td></tr>
-      <tr><td>Inovação e Impacto Social</td><td>10%</td><td>PWA instalável, automação do aquecimento, sustentabilidade.</td></tr>
-    </table>
-  </section>
-
-  <!-- MAPA DO SITE -->
-  <section id="mapa" class="mapa-site reveal" aria-labelledby="titulo-mapa">
-    <h2 id="titulo-mapa">🗺️ Mapa do Site</h2>
-    <ul>
-      <li><a href="#desafio">🎯 O Desafio</a></li>
-      <li><a href="#programacao">💻 Programação</a></li>
-      <li><a href="#tecnociencia">🌈 Tecnociência — Refração</a></li>
-      <li><a href="#robotica">🤖 Robótica — Corpo Negro</a></li>
-      <li><a href="#comparativo">📊 Gráfico Comparativo</a></li>
-      <li><a href="#piscina">🏊 Projeto da Piscina</a></li>
-      <li><a href="#calculadora">🧮 Calculadora de Economia</a></li>
-      <li><a href="#criterios">📊 Critérios de Avaliação</a></li>
-      <li><a href="#mapa">🗺️ Mapa do Site</a></li>
-    </ul>
+  <section id="criterios" class="secao reveal" aria-labelledby="titulo-crit">
+    <div class="secao-cabecalho">
+      <span class="secao-icone">📋</span>
+      <div>
+        <span class="secao-tag">Avaliação</span>
+        <h2 id="titulo-crit">Critérios de Avaliação</h2>
+      </div>
+    </div>
+    <div class="tabela-wrapper">
+      <table>
+        <tr><th>Critério</th><th>Peso</th><th>Status</th></tr>
+        <tr><td>Estrutura e Navegação</td><td>10%</td><td><span class="badge-ok">✅ Completo</span></td></tr>
+        <tr><td>Design e Responsividade</td><td>15%</td><td><span class="badge-ok">✅ Completo</span></td></tr>
+        <tr><td>Profundidade Científica</td><td>30%</td><td><span class="badge-ok">✅ Completo</span></td></tr>
+        <tr><td>Interatividade e Simuladores</td><td>20%</td><td><span class="badge-ok">✅ Completo</span></td></tr>
+        <tr><td>Acessibilidade e Inclusão</td><td>15%</td><td><span class="badge-ok">✅ Completo</span></td></tr>
+        <tr><td>Inovação e Impacto Social</td><td>10%</td><td><span class="badge-ok">✅ Completo</span></td></tr>
+      </table>
+    </div>
   </section>
 
 </main>
 
 <footer>
-  <p>🌞💧 <strong>Projeto Integrador CEP — 3º Trimestre 2026</strong></p>
-  <p>Desenvolvido com HTML5, CSS3 e JavaScript | 100% acessível | Funciona offline (PWA) | <a href="#conteudo">Voltar ao topo</a></p>
-  <p><small>Site otimizado para navegação por teclado (Tab / Shift+Tab / Enter)</small></p>
+  <div class="footer-ondas" aria-hidden="true">
+    <svg viewBox="0 0 1440 100" preserveAspectRatio="none">
+      <path d="M0,50 C240,100 480,0 720,50 C960,100 1200,0 1440,50 L1440,100 L0,100 Z"></path>
+    </svg>
+  </div>
+  <div class="footer-conteudo">
+    <div class="footer-logo">🌞💧 Luz, Calor & Água</div>
+    <p><strong>Projeto Integrador CEP — 3º Trimestre 2026</strong></p>
+    <p>Programação + Tecnociência + Robótica</p>
+    <div class="footer-links">
+      <a href="#conteudo">↑ Voltar ao topo</a>
+      <span>•</span>
+      <span>100% Acessível</span>
+      <span>•</span>
+      <span>Navegação por Teclado</span>
+    </div>
+  </div>
 </footer>
 
-<!-- JS externo -->
 <script src="script.js"></script>
 
 </body>
