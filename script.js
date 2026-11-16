@@ -1,7 +1,7 @@
 /* ============================================================
    PROJETO INTEGRADOR CEP — 3º TRI 2026
-   Script principal: simuladores, calculadora, gráfico comparativo,
-   modo escuro, narração em áudio e animações de entrada
+   Script principal: simuladores (refração, prisma, Planck, comparativo, piscina),
+   calculadora, modo escuro, narração em áudio e animações de entrada
    ============================================================ */
 
 /* ============ ACESSIBILIDADE ============ */
@@ -20,7 +20,7 @@ function toggleDislexia() {
   mostrarToast('Fonte para dislexia ' + (document.body.classList.contains('dislexia') ? 'ativada' : 'desativada'));
 }
 
-/* 🆕 MODO ESCURO */
+/* MODO ESCURO */
 function toggleDarkMode() {
   document.body.classList.toggle('dark-mode');
   const btn = document.getElementById('btnDark');
@@ -32,7 +32,6 @@ function toggleDarkMode() {
   mostrarToast('Modo ' + (ativo ? 'escuro' : 'claro') + ' ativado');
 }
 
-// Restaurar preferência ao carregar
 if (localStorage.getItem('darkMode') === '1') {
   document.body.classList.add('dark-mode');
   window.addEventListener('DOMContentLoaded', () => {
@@ -57,7 +56,7 @@ function diminuirFonte() {
   }
 }
 
-/* 🆕 NARRAÇÃO EM ÁUDIO (Web Speech API) */
+/* NARRAÇÃO EM ÁUDIO (Web Speech API) */
 let narracaoAtiva = false;
 let utteranceAtual = null;
 
@@ -95,18 +94,15 @@ function narrarProximaSecao() {
   const secoes = document.querySelectorAll('section, .hero');
   const secoesArray = Array.from(secoes);
   
-  // Encontrar a próxima seção não narrada
   const scrollY = window.scrollY + 200;
   let proxima = secoesArray.find(s => s.offsetTop > scrollY);
   
   if (!proxima) {
-    // Voltar ao início
     proxima = secoesArray[0];
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
   
   if (proxima) {
-    // Pegar apenas o texto visível (títulos e parágrafos)
     const texto = proxima.innerText
       .replace(/🎮|🎨|🧮|📊|🔍|💡|🌞|🌱|🏊|🌈|🤖|💻|🎯|🗺️|📱|🔥|💰|🌳/g, '')
       .replace(/\s+/g, ' ')
@@ -118,7 +114,6 @@ function narrarProximaSecao() {
       utteranceAtual.rate = 0.95;
       utteranceAtual.pitch = 1;
       
-      // Tentar voz em português
       const vozes = window.speechSynthesis.getVoices();
       const vozPt = vozes.find(v => v.lang.startsWith('pt'));
       if (vozPt) utteranceAtual.voice = vozPt;
@@ -137,12 +132,11 @@ function narrarProximaSecao() {
   }
 }
 
-// Carregar vozes
 if ('speechSynthesis' in window) {
   window.speechSynthesis.onvoiceschanged = () => window.speechSynthesis.getVoices();
 }
 
-/* 🆕 TOAST DE NOTIFICAÇÃO */
+/* TOAST DE NOTIFICAÇÃO */
 function mostrarToast(mensagem) {
   let toast = document.querySelector('.toast');
   if (!toast) {
@@ -156,7 +150,7 @@ function mostrarToast(mensagem) {
   toast._timeout = setTimeout(() => toast.classList.remove('visivel'), 2500);
 }
 
-/* 🆕 ANIMAÇÕES DE ENTRADA (SCROLL REVEAL) */
+/* ANIMAÇÕES DE ENTRADA (SCROLL REVEAL) */
 const observer = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
@@ -181,52 +175,94 @@ function lambdaParaCor(lambda) {
   return `rgb(${Math.round(r*255)},${Math.round(g*255)},${Math.round(b*255)})`;
 }
 
-/* ============ SIMULADOR 1: DIFRAÇÃO ============ */
-const canvasD = document.getElementById('canvasDifracao');
-const ctxD = canvasD.getContext('2d');
-const lambdaSlider = document.getElementById('lambda');
-const fendaSlider = document.getElementById('fenda');
-const valorLambda = document.getElementById('valorLambda');
-const valorFenda = document.getElementById('valorFenda');
+/* ============ SIMULADOR 1: REFRAÇÃO NA ÁGUA ============ */
+const canvasRef = document.getElementById('canvasRefracao');
+const ctxRef = canvasRef.getContext('2d');
+const anguloSlider = document.getElementById('angulo');
+const meioSelect = document.getElementById('meio');
+const valorAngulo = document.getElementById('valorAngulo');
 
-function desenharDifracao() {
-  const w = canvasD.width, h = canvasD.height;
-  ctxD.fillStyle = '#001a33';
-  ctxD.fillRect(0,0,w,h);
+function desenharRefracao() {
+  const w = canvasRef.width, h = canvasRef.height;
+  ctxRef.fillStyle = '#001a33';
+  ctxRef.fillRect(0, 0, w, h);
   
-  const lambda = +lambdaSlider.value;
-  const fenda = +fendaSlider.value;
-  valorLambda.textContent = lambda;
-  valorFenda.textContent = fenda;
+  const anguloInc = +anguloSlider.value;
+  const n2 = +meioSelect.value;
+  valorAngulo.textContent = anguloInc;
   
-  const cor = lambdaParaCor(lambda);
+  // Linha da superfície
+  ctxRef.strokeStyle = '#fff';
+  ctxRef.lineWidth = 2;
+  ctxRef.beginPath();
+  ctxRef.moveTo(0, h/2);
+  ctxRef.lineTo(w, h/2);
+  ctxRef.stroke();
   
-  ctxD.fillStyle = '#333';
-  ctxD.fillRect(w/2 - 4, 0, 8, h/2 - 20);
-  ctxD.fillRect(w/2 - 4, h/2 + 20, 8, h/2 - 20);
-  ctxD.fillStyle = cor;
-  ctxD.fillRect(w/2 - 2, h/2 - 20, 4, 40);
+  // Água (metade inferior)
+  ctxRef.fillStyle = 'rgba(0, 119, 182, 0.3)';
+  ctxRef.fillRect(0, h/2, w, h/2);
   
-  for (let x = 0; x < w; x++) {
-    const dx = x - w/2;
-    const theta = dx / (w/2);
-    const u = Math.PI * Math.sin(theta) * (fenda*1e-6) / (lambda*1e-9) * 0.3;
-    const sinc = u===0 ? 1 : Math.sin(u)/u;
-    const I = sinc*sinc;
-    const altura = I * h * 0.8;
-    ctxD.fillStyle = cor;
-    ctxD.globalAlpha = I;
-    ctxD.fillRect(x, h - altura, 1, altura);
-  }
-  ctxD.globalAlpha = 1;
+  // Normal (linha vertical)
+  ctxRef.strokeStyle = 'rgba(255,255,255,0.5)';
+  ctxRef.setLineDash([5, 5]);
+  ctxRef.beginPath();
+  ctxRef.moveTo(w/2, 0);
+  ctxRef.lineTo(w/2, h);
+  ctxRef.stroke();
+  ctxRef.setLineDash([]);
   
-  ctxD.fillStyle = '#fff';
-  ctxD.font = '14px Poppins';
-  ctxD.fillText(`λ = ${lambda} nm | fenda = ${fenda} µm`, 10, 20);
+  // Raio incidente (luz branca)
+  const theta1 = anguloInc * Math.PI / 180;
+  const xInicio = w/2 - Math.sin(theta1) * h/2;
+  ctxRef.strokeStyle = '#fff';
+  ctxRef.lineWidth = 4;
+  ctxRef.beginPath();
+  ctxRef.moveTo(xInicio, 0);
+  ctxRef.lineTo(w/2, h/2);
+  ctxRef.stroke();
+  
+  // Raios refratados (cada cor com índice diferente)
+  const cores = [
+    {nome: 'Vermelho', lambda: 700, n: n2 - 0.012},
+    {nome: 'Laranja', lambda: 620, n: n2 - 0.008},
+    {nome: 'Amarelo', lambda: 580, n: n2 - 0.005},
+    {nome: 'Verde', lambda: 530, n: n2 - 0.002},
+    {nome: 'Azul', lambda: 470, n: n2 + 0.004},
+    {nome: 'Violeta', lambda: 400, n: n2 + 0.010}
+  ];
+  
+  cores.forEach(cor => {
+    // Lei de Snell: n1*sin(θ1) = n2*sin(θ2)
+    const sinTheta2 = Math.sin(theta1) / cor.n; // n1 = 1 (ar)
+    
+    if (sinTheta2 <= 1) {
+      const theta2 = Math.asin(sinTheta2);
+      const xFinal = w/2 + Math.sin(theta2) * h/2;
+      
+      ctxRef.strokeStyle = lambdaParaCor(cor.lambda);
+      ctxRef.lineWidth = 3;
+      ctxRef.beginPath();
+      ctxRef.moveTo(w/2, h/2);
+      ctxRef.lineTo(xFinal, h);
+      ctxRef.stroke();
+      
+      // Etiqueta do ângulo
+      ctxRef.fillStyle = lambdaParaCor(cor.lambda);
+      ctxRef.font = '10px Poppins';
+      ctxRef.fillText(`${cor.nome}: ${(theta2 * 180 / Math.PI).toFixed(1)}°`, xFinal - 30, h - 10);
+    }
+  });
+  
+  // Informações
+  ctxRef.fillStyle = '#fff';
+  ctxRef.font = 'bold 14px Poppins';
+  ctxRef.fillText(`Ângulo incidência: ${anguloInc}°`, 10, 20);
+  ctxRef.fillText(`Meio: n = ${n2.toFixed(3)}`, 10, 40);
 }
-lambdaSlider.addEventListener('input', desenharDifracao);
-fendaSlider.addEventListener('input', desenharDifracao);
-desenharDifracao();
+anguloSlider.addEventListener('input', desenharRefracao);
+meioSelect.addEventListener('change', desenharRefracao);
+desenharRefracao();
 
 /* ============ SIMULADOR 2: PRISMA ============ */
 const canvasP = document.getElementById('canvasPrisma');
@@ -600,24 +636,3 @@ function calcularEconomia() {
   resultadoCalc.scrollIntoView({behavior: 'smooth', block: 'center'});
   mostrarToast('✅ Cálculo concluído!');
 }
-
-/* 🆕 PWA - REGISTRO DO SERVICE WORKER */
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('sw.js')
-      .then(reg => console.log('✅ Service Worker registrado'))
-      .catch(err => console.log('⚠️ SW falhou:', err));
-  });
-}
-
-/* 🆕 DICA DE INSTALAÇÃO PWA */
-let deferredPrompt;
-window.addEventListener('beforeinstallprompt', (e) => {
-  e.preventDefault();
-  deferredPrompt = e;
-  setTimeout(() => {
-    if (deferredPrompt && !window.matchMedia('(display-mode: standalone)').matches) {
-      mostrarToast('📱 Toque no menu do navegador para instalar o app!');
-    }
-  }, 3000);
-});
