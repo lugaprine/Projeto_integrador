@@ -73,6 +73,13 @@ body.dark-mode .card-integracao, body.dark-mode .card-conexao { background: rgba
 body.dark-mode .tech-item { background: rgba(30,40,60,0.6); color: var(--texto); }
 body.dark-mode .destaque-box { background: rgba(30,40,60,0.6); }
 body.dark-mode .tabela-wrapper { background: rgba(30,40,60,0.4); }
+body.dark-mode .card-equipe { background: rgba(30,40,60,0.9); color: var(--texto); }
+body.dark-mode .secao-equipe { background: linear-gradient(135deg, rgba(30,60,100,0.8), rgba(60,40,20,0.8)); }
+body.dark-mode .controles select { background: #1a2332; color: var(--texto); border-color: #1e3a5f; }
+body.dark-mode .calc-grid input[type="number"] { background: #1a2332; color: var(--texto); border-color: #1e3a5f; }
+body.dark-mode .info-central { background: rgba(30,40,60,0.8); }
+body.dark-mode .calculadora { background: rgba(20,25,40,0.9); }
+body.dark-mode .secao-calculadora { background: linear-gradient(135deg, rgba(60,40,20,0.8), rgba(30,60,100,0.8)); }
 
 /* Modo dislexia */
 body.dislexia {
@@ -707,7 +714,6 @@ body.dark-mode .controles label { background: rgba(30,40,60,0.8); }
   font-family: inherit; background: white;
   cursor: pointer; transition: all .3s;
 }
-body.dark-mode .controles select { background: #1a2332; color: var(--texto); border-color: #1e3a5f; }
 .controles select:focus { border-color: var(--laranja-sol); outline: none; }
 .valor {
   color: var(--laranja-sol);
@@ -735,7 +741,6 @@ body.dark-mode .controles select { background: #1a2332; color: var(--texto); bor
   border-radius: var(--radius-sm);
   box-shadow: var(--sombra-sm);
 }
-body.dark-mode .info-central { background: rgba(30,40,60,0.8); }
 
 /* ============ CHECKBOXES COMPARATIVO ============ */
 .checkboxes { flex-direction: row; gap: 1rem; }
@@ -776,9 +781,6 @@ body.dark-mode .info-central { background: rgba(30,40,60,0.8); }
   background: linear-gradient(135deg, rgba(255,248,225,0.9), rgba(227,242,253,0.9));
   border: 2px solid var(--laranja-sol);
 }
-body.dark-mode .secao-calculadora {
-  background: linear-gradient(135deg, rgba(60,40,20,0.8), rgba(30,60,100,0.8));
-}
 .calculadora {
   background: white;
   padding: 2rem;
@@ -786,7 +788,6 @@ body.dark-mode .secao-calculadora {
   box-shadow: var(--sombra-md);
   margin-top: 1.5rem;
 }
-body.dark-mode .calculadora { background: rgba(20,25,40,0.9); }
 .calc-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -819,7 +820,6 @@ body.dark-mode .calculadora { background: rgba(20,25,40,0.9); }
   font-family: inherit; transition: all .3s;
   background: white;
 }
-body.dark-mode .calc-grid input[type="number"] { background: #1a2332; color: var(--texto); border-color: #1e3a5f; }
 .calc-grid input[type="number"]:focus {
   outline: none;
   border-color: var(--laranja-sol);
@@ -856,7 +856,6 @@ body.dark-mode .calc-grid input[type="number"] { background: #1a2332; color: var
   border: 2px solid var(--azul-agua);
   box-shadow: var(--sombra-md);
 }
-body.dark-mode .resultado-calc { background: rgba(30,40,60,0.9); }
 .resultado-calc h3 {
   color: var(--azul-agua);
   margin-bottom: 1.5rem;
@@ -905,6 +904,124 @@ body.dark-mode .resultado-calc { background: rgba(30,40,60,0.9); }
 .calc-card.destaque .numero { color: white; font-size: 2.2rem; }
 .calc-card.destaque .unidade { color: rgba(255,255,255,0.9); }
 
+/* ============ EQUIPE ============ */
+.secao-equipe {
+  background: linear-gradient(135deg, rgba(255,248,225,0.9), rgba(227,242,253,0.9));
+  border: 2px solid var(--azul-agua);
+}
+
+.equipe-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+  margin: 2rem 0;
+}
+
+.card-equipe {
+  background: white;
+  padding: 2.5rem 1.5rem;
+  border-radius: var(--radius-lg);
+  text-align: center;
+  box-shadow: var(--sombra-md);
+  transition: all .4s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  overflow: hidden;
+  border: 2px solid transparent;
+}
+
+.card-equipe::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 5px;
+  background: var(--grad-primario);
+  transform: scaleX(0);
+  transition: transform .4s;
+  transform-origin: left;
+}
+
+.card-equipe:hover::before {
+  transform: scaleX(1);
+}
+
+.card-equipe:hover {
+  transform: translateY(-10px) scale(1.02);
+  box-shadow: var(--sombra-lg);
+  border-color: var(--laranja-sol);
+}
+
+.card-equipe-avatar {
+  width: 100px;
+  height: 100px;
+  margin: 0 auto 1.5rem;
+  background: var(--grad-primario);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--fonte-display);
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: white;
+  box-shadow: var(--sombra-colorida);
+  transition: all .4s;
+  position: relative;
+}
+
+.card-equipe-avatar::after {
+  content: '';
+  position: absolute;
+  inset: -5px;
+  border: 3px solid var(--laranja-sol);
+  border-radius: 50%;
+  opacity: 0;
+  transition: all .4s;
+}
+
+.card-equipe:hover .card-equipe-avatar {
+  transform: rotate(360deg) scale(1.1);
+}
+
+.card-equipe:hover .card-equipe-avatar::after {
+  opacity: 1;
+  inset: -10px;
+}
+
+.card-equipe h3 {
+  font-family: var(--fonte-display);
+  color: var(--azul-agua);
+  font-size: 1.5rem;
+  margin: 0 0 .8rem;
+  font-weight: 700;
+}
+
+.card-equipe-numero {
+  font-size: 1.1rem;
+  color: var(--texto-suave);
+  margin: 0 0 .5rem;
+}
+
+.card-equipe-numero strong {
+  color: var(--laranja-sol);
+  font-size: 1.3rem;
+  font-family: var(--fonte-display);
+}
+
+.card-equipe-turma {
+  font-size: 1rem;
+  color: var(--texto);
+  margin: 0;
+  padding: .5rem 1rem;
+  background: linear-gradient(135deg, rgba(0,119,182,0.1), rgba(255,158,0,0.1));
+  border-radius: 20px;
+  display: inline-block;
+}
+
+.card-equipe-turma strong {
+  color: var(--azul-agua);
+  font-weight: 700;
+}
+
 /* ============ FOOTER ============ */
 footer {
   background: linear-gradient(135deg, #023e8a, #0077b6);
@@ -932,6 +1049,14 @@ footer {
   -webkit-text-fill-color: transparent;
 }
 footer p { margin: .5rem 0; opacity: .9; }
+.footer-integrantes {
+  margin: 1rem 0;
+  display: flex; justify-content: center;
+  gap: .8rem; flex-wrap: wrap;
+  font-size: .95rem;
+  font-weight: 600;
+  color: var(--amarelo-sol);
+}
 .footer-links {
   margin-top: 1.5rem;
   display: flex; justify-content: center;
@@ -981,6 +1106,10 @@ footer p { margin: .5rem 0; opacity: .9; }
   .calc-card .numero { font-size: 1.5rem; }
   .acessibilidade button { font-size: .75rem; padding: .4rem .6rem; }
   .blob { display: none; }
+  .equipe-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+  .card-equipe { padding: 2rem 1rem; }
+  .card-equipe-avatar { width: 80px; height: 80px; font-size: 2rem; }
+  .footer-integrantes { flex-direction: column; gap: .3rem; }
 }
 
 /* ============ ACESSIBILIDADE ============ */

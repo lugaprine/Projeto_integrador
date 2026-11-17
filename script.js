@@ -1,6 +1,6 @@
 /* ============================================================
    PROJETO INTEGRADOR CEP — 3º TRI 2026
-   Script completo: simuladores, calculadora, efeitos visuais
+   Lucas Felipe (20) • Marco Antônio (23) • Mateus Tessari (25)
    ============================================================ */
 
 /* ============ ACESSIBILIDADE ============ */
@@ -99,7 +99,7 @@ function narrarProximaSecao() {
   
   if (proxima) {
     const texto = proxima.innerText
-      .replace(/🎮|🎨|🧮|📊|🔍|💡|🌞|🌱|🏊|🌈|🤖|💻|🎯|🗺️|📱|🔥|💰|🌳|📐|🔬|🌡️|🛰️|☀️|💧|📦|🎯|⚡|🕐/g, '')
+      .replace(/🎮|🎨|🧮|📊|🔍|💡|🌞|🌱|🏊|🌈|🤖|💻|🎯|🗺️|📱|🔥|💰|🌳|📐|🔬|🌡️|🛰️|☀️|💧|📦|⚡|🕐|👥/g, '')
       .replace(/\s+/g, ' ').trim();
     
     if (texto.length > 10) {
@@ -183,7 +183,6 @@ function desenharRefracao() {
   const w = canvasRef.width, h = canvasRef.height;
   ctxRef.clearRect(0,0,w,h);
   
-  // Fundo gradiente
   const grad = ctxRef.createLinearGradient(0,0,0,h);
   grad.addColorStop(0, '#001a33');
   grad.addColorStop(0.5, '#003366');
@@ -195,14 +194,12 @@ function desenharRefracao() {
   const n2 = +meioSelect.value;
   valorAngulo.textContent = anguloInc;
   
-  // Água (metade inferior) com gradiente
   const gradAgua = ctxRef.createLinearGradient(0, h/2, 0, h);
   gradAgua.addColorStop(0, 'rgba(0, 180, 216, 0.3)');
   gradAgua.addColorStop(1, 'rgba(0, 119, 182, 0.5)');
   ctxRef.fillStyle = gradAgua;
   ctxRef.fillRect(0, h/2, w, h/2);
   
-  // Linha da superfície
   ctxRef.strokeStyle = 'rgba(255,255,255,0.8)';
   ctxRef.lineWidth = 2;
   ctxRef.beginPath();
@@ -210,7 +207,6 @@ function desenharRefracao() {
   ctxRef.lineTo(w, h/2);
   ctxRef.stroke();
   
-  // Normal
   ctxRef.strokeStyle = 'rgba(255,255,255,0.4)';
   ctxRef.setLineDash([5, 5]);
   ctxRef.beginPath();
@@ -219,11 +215,9 @@ function desenharRefracao() {
   ctxRef.stroke();
   ctxRef.setLineDash([]);
   
-  // Raio incidente (branco brilhante)
   const theta1 = anguloInc * Math.PI / 180;
   const xInicio = w/2 - Math.sin(theta1) * h/2;
   
-  // Brilho do raio
   ctxRef.shadowBlur = 15;
   ctxRef.shadowColor = '#fff';
   ctxRef.strokeStyle = '#fff';
@@ -234,7 +228,6 @@ function desenharRefracao() {
   ctxRef.stroke();
   ctxRef.shadowBlur = 0;
   
-  // Raios refratados
   const cores = [
     {nome: 'Vermelho', lambda: 700, n: n2 - 0.012},
     {nome: 'Laranja', lambda: 620, n: n2 - 0.008},
@@ -266,7 +259,6 @@ function desenharRefracao() {
     }
   });
   
-  // Info
   ctxRef.fillStyle = '#fff';
   ctxRef.font = 'bold 14px Poppins';
   ctxRef.fillText(`Ângulo: ${anguloInc}°`, 15, 25);
@@ -295,7 +287,6 @@ function desenharPrisma() {
   const intens = +intSlider.value / 100;
   valorInt.textContent = intSlider.value;
   
-  // Raio branco com brilho
   ctxP.shadowBlur = 20;
   ctxP.shadowColor = '#fff';
   ctxP.strokeStyle = `rgba(255,255,255,${intens})`;
@@ -306,7 +297,6 @@ function desenharPrisma() {
   ctxP.stroke();
   ctxP.shadowBlur = 0;
   
-  // Prisma com gradiente
   const gradPrisma = ctxP.createLinearGradient(200, h/2-60, 300, h/2+60);
   gradPrisma.addColorStop(0, 'rgba(200,230,255,0.6)');
   gradPrisma.addColorStop(1, 'rgba(100,180,220,0.4)');
@@ -321,7 +311,6 @@ function desenharPrisma() {
   ctxP.fill();
   ctxP.stroke();
   
-  // Raios coloridos com brilho
   const cores = [{l:400},{l:450},{l:500},{l:550},{l:600},{l:650},{l:700}];
   cores.forEach((c,i) => {
     const ang = (i - 3) * 4;
@@ -376,7 +365,6 @@ function desenharPlanck() {
   const lambdaMax = 2.898e-3 / T;
   const lambdaMaxNm = lambdaMax * 1e9;
   
-  // Eixos
   ctxB.strokeStyle = 'rgba(255,255,255,0.6)';
   ctxB.lineWidth = 1;
   ctxB.beginPath();
@@ -401,7 +389,6 @@ function desenharPlanck() {
     pontos.push({lam, B});
   }
   
-  // Curva com gradiente
   const corCurva = lambdaParaCor(Math.max(380, Math.min(750, lambdaMaxNm)));
   ctxB.shadowBlur = 15;
   ctxB.shadowColor = corCurva;
@@ -416,7 +403,6 @@ function desenharPlanck() {
   ctxB.stroke();
   ctxB.shadowBlur = 0;
   
-  // Pico
   const xPico = 50 + (w-70) * (lambdaMax - lambdaMin)/(lambdaMaxR - lambdaMin);
   ctxB.shadowBlur = 15;
   ctxB.shadowColor = '#ff0';
@@ -426,7 +412,6 @@ function desenharPlanck() {
   ctxB.fill();
   ctxB.shadowBlur = 0;
   
-  // Escala
   for (let l = 500; l <= 2500; l += 500) {
     const x = 50 + (w-70) * (l*1e-9 - lambdaMin)/(lambdaMaxR - lambdaMin);
     ctxB.fillStyle = 'rgba(255,255,255,0.7)';
@@ -481,7 +466,6 @@ function desenharComparativo() {
     ctxComp.fillText(l, x-10, ht-25);
   }
   
-  // Faixa visível
   const xVis1 = 50 + (w-70) * (380e-9 - lambdaMin)/(lambdaMaxR - lambdaMin);
   const xVis2 = 50 + (w-70) * (750e-9 - lambdaMin)/(lambdaMaxR - lambdaMin);
   const gradVis = ctxComp.createLinearGradient(xVis1, 0, xVis2, 0);
@@ -561,7 +545,6 @@ function desenharPiscina() {
   valorIrrad.textContent = irrad;
   valorHora.textContent = hora;
   
-  // Céu
   const grad = ctxPis.createLinearGradient(0,0,0,ht/2);
   if (hora < 7 || hora > 18) {
     grad.addColorStop(0,'#001a33'); grad.addColorStop(1,'#003366');
@@ -573,7 +556,6 @@ function desenharPiscina() {
   ctxPis.fillStyle = grad;
   ctxPis.fillRect(0,0,w,ht/2);
   
-  // Sol com brilho
   const xSol = w * (hora-6)/12;
   const ySol = ht/2 - Math.sin((hora-6)/12 * Math.PI) * ht/3;
   ctxPis.shadowBlur = 30;
@@ -584,14 +566,12 @@ function desenharPiscina() {
   ctxPis.fill();
   ctxPis.shadowBlur = 0;
   
-  // Piscina com gradiente
   const gradPisc = ctxPis.createLinearGradient(0, ht/2, 0, ht);
   gradPisc.addColorStop(0, '#00b4d8');
   gradPisc.addColorStop(1, '#0077b6');
   ctxPis.fillStyle = gradPisc;
   ctxPis.fillRect(50, ht/2, w-100, ht/2 - 20);
   
-  // Ondas
   ctxPis.strokeStyle = 'rgba(255,255,255,0.6)';
   ctxPis.lineWidth = 2;
   for (let i = 0; i < 3; i++) {
