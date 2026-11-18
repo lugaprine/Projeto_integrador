@@ -99,7 +99,7 @@ function narrarProximaSecao() {
   
   if (proxima) {
     const texto = proxima.innerText
-      .replace(/🎮|🎨|🧮|📊|🔍|💡|🌞|🌱|🏊|🌈|🤖|💻|🎯|🗺️|📱|🔥|💰|🌳|📐|🔬|🌡️|🛰️|☀️|💧|📦|⚡|🕐|👥/g, '')
+      .replace(/🎮|🎨|🧮|📊|🔍|💡|🌞|🌱|🏊|🌈|🤖|💻|🎯|🗺️|📱|🔥|💰|🌳|📐|🔬|🌡️|🛰️|☀️|💧|📦|⚡|🕐|👥|📚|🔗|▼/g, '')
       .replace(/\s+/g, ' ').trim();
     
     if (texto.length > 10) {

@@ -19,13 +19,11 @@
 
 <a href="#conteudo" class="skip-link">Pular para o conteúdo principal</a>
 
-<!-- Partículas de fundo -->
 <div class="particulas" aria-hidden="true"></div>
 <div class="blob blob-1" aria-hidden="true"></div>
 <div class="blob blob-2" aria-hidden="true"></div>
 <div class="blob blob-3" aria-hidden="true"></div>
 
-<!-- VLIBRAS -->
 <div vw class="enabled">
   <div vw-access-button class="active"></div>
   <div vw-plugin-wrapper>
@@ -35,7 +33,6 @@
 <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
 <script>new window.VLibras.Widget('https://vlibras.gov.br/app');</script>
 
-<!-- BARRA DE ACESSIBILIDADE -->
 <div class="acessibilidade" role="region" aria-label="Controles de acessibilidade">
   <button onclick="toggleContraste()" aria-label="Ativar alto contraste">⚫ Contraste</button>
   <button onclick="toggleDislexia()" aria-label="Ativar fonte para dislexia">🔤 Dislexia</button>
@@ -46,7 +43,6 @@
   <button onclick="pararNarracao()" aria-label="Parar narração">⏹️ Parar</button>
 </div>
 
-<!-- HEADER -->
 <header id="header">
   <div class="header-inner">
     <div class="logo">
@@ -59,6 +55,8 @@
         <li><a href="#programacao">Programação</a></li>
         <li><a href="#tecnociencia">Tecnociência</a></li>
         <li><a href="#robotica">Robótica</a></li>
+        <li><a href="#questoes">Questões</a></li>
+        <li><a href="#relacao">Relação</a></li>
         <li><a href="#comparativo">Comparativo</a></li>
         <li><a href="#piscina">Piscina</a></li>
         <li><a href="#calculadora">Calculadora</a></li>
@@ -292,6 +290,252 @@
     </div>
   </section>
 
+  <!-- 🆕 QUESTÕES DE APROFUNDAMENTO -->
+  <section id="questoes" class="secao secao-questoes reveal" aria-labelledby="titulo-questoes">
+    <div class="secao-cabecalho">
+      <span class="secao-icone">📚</span>
+      <div>
+        <span class="secao-tag">Reflexão Científica</span>
+        <h2 id="titulo-questoes">Questões de Aprofundamento</h2>
+      </div>
+    </div>
+    <p>Respostas detalhadas para as principais questões sobre corpo negro e aproveitamento da energia solar:</p>
+
+    <div class="questoes-grid">
+      
+      <details class="questao-card">
+        <summary>
+          <span class="questao-numero">01</span>
+          <span class="questao-texto">O que é um corpo negro ideal?</span>
+          <span class="questao-seta">▼</span>
+        </summary>
+        <div class="questao-resposta">
+          <p>Um <strong>corpo negro ideal</strong> é um objeto físico teórico que <strong>absorve 100% da radiação eletromagnética</strong> que incide sobre ele, em qualquer comprimento de onda ou ângulo. Por isso é chamado de "negro" — ele não reflete nenhuma luz.</p>
+          <p>Apesar de absorver toda a radiação, ele também <strong>emite radiação</strong> de forma eficiente, e o espectro dessa emissão depende <strong>apenas de sua temperatura</strong>, não do material de que é feito.</p>
+          <div class="questao-exemplo">
+            <strong>💡 Exemplos práticos:</strong>
+            <ul>
+              <li>O <strong>Sol</strong> se comporta aproximadamente como um corpo negro a ~5800 K</li>
+              <li>Uma <strong>brasa</strong> é um corpo negro a ~1000 K (emite luz vermelha)</li>
+              <li>Um <strong>forno aquecido</strong> com um pequeno orifício se comporta como corpo negro</li>
+            </ul>
+          </div>
+        </div>
+      </details>
+
+      <details class="questao-card">
+        <summary>
+          <span class="questao-numero">02</span>
+          <span class="questao-texto">Como a temperatura influencia o espectro de radiação emitida?</span>
+          <span class="questao-seta">▼</span>
+        </summary>
+        <div class="questao-resposta">
+          <p>A temperatura afeta o espectro de duas formas fundamentais, descritas por duas leis físicas:</p>
+          
+          <div class="lei-mini">
+            <h4>📈 Lei de Stefan-Boltzmann</h4>
+            <p>A <strong>energia total emitida</strong> cresce com a quarta potência da temperatura:</p>
+            <p class="formula-mini">E = σ · T⁴</p>
+            <p>→ Dobrar a temperatura = emitir <strong>16x mais energia</strong>.</p>
+          </div>
+
+          <div class="lei-mini">
+            <h4>📊 Lei de Wien</h4>
+            <p>O <strong>pico de emissão</strong> se desloca para comprimentos de onda menores:</p>
+            <p class="formula-mini">λ<sub>máx</sub> = 2,898 × 10⁻³ / T</p>
+            <p>→ Quanto mais quente, mais <strong>azul/ultravioleta</strong>; quanto mais frio, mais <strong>vermelho/infravermelho</strong>.</p>
+          </div>
+
+          <div class="questao-exemplo">
+            <strong>🌡️ Na prática:</strong>
+            <ul>
+              <li>~1000 K → pico no <strong>infravermelho</strong> (brasa vermelha)</li>
+              <li>~2800 K → pico no <strong>infravermelho próximo</strong> (lâmpada amarela)</li>
+              <li>~5800 K → pico no <strong>visível</strong> (Sol branco-amarelado)</li>
+              <li>~10000 K → pico no <strong>ultravioleta</strong> (estrela azul)</li>
+            </ul>
+          </div>
+        </div>
+      </details>
+
+      <details class="questao-card">
+        <summary>
+          <span class="questao-numero">03</span>
+          <span class="questao-texto">Por que o Sol emite principalmente radiação visível e infravermelha?</span>
+          <span class="questao-seta">▼</span>
+        </summary>
+        <div class="questao-resposta">
+          <p>Porque a temperatura da superfície do Sol é de aproximadamente <strong>5800 K</strong>. Aplicando a Lei de Wien:</p>
+          <p class="formula-mini">λ<sub>máx</sub> = 2,898 × 10⁻³ / 5800 ≈ <strong>500 nm</strong></p>
+          <p>Esse valor (~500 nm) cai exatamente no meio do <strong>espectro visível</strong> (cor verde-amarela). Por isso o Sol nos parece branco-amarelado.</p>
+          
+          <div class="questao-exemplo">
+            <strong>📊 Distribuição da energia solar:</strong>
+            <ul>
+              <li>~<strong>44%</strong> → radiação <strong>visível</strong> (380–750 nm)</li>
+              <li>~<strong>49%</strong> → radiação <strong>infravermelha</strong> (&gt;750 nm) — sentimos como calor</li>
+              <li>~<strong>7%</strong> → radiação <strong>ultravioleta</strong> (&lt;380 nm) — causa queimaduras</li>
+            </ul>
+          </div>
+
+          <p>Essa combinação é perfeita para a vida na Terra e para o <strong>aquecimento de piscinas</strong>: a luz visível ilumina, e o infravermelho aquece.</p>
+        </div>
+      </details>
+
+      <details class="questao-card">
+        <summary>
+          <span class="questao-numero">04</span>
+          <span class="questao-texto">Como esse conhecimento ajuda a compreender o aproveitamento da energia solar?</span>
+          <span class="questao-seta">▼</span>
+        </summary>
+        <div class="questao-resposta">
+          <p>Entender o corpo negro e a radiação solar permite <strong>projetar sistemas eficientes</strong> de aquecimento:</p>
+
+          <div class="lei-mini">
+            <h4>🎯 Escolha do coletor</h4>
+            <p>Coletores solares devem ter superfícies <strong>escuras</strong> (próximas de um corpo negro) para <strong>absorver o máximo</strong> de radiação visível e infravermelha.</p>
+          </div>
+
+          <div class="lei-mini">
+            <h4>📐 Dimensionamento</h4>
+            <p>Sabendo que o Sol emite ~1000 W/m² na superfície terrestre, podemos <strong>calcular a área necessária</strong> de coletores para aquecer uma piscina de determinado volume.</p>
+          </div>
+
+          <div class="lei-mini">
+            <h4>🌡️ Controle de temperatura</h4>
+            <p>Sensores infravermelhos (baseados na Lei de Planck) medem a temperatura da água <strong>sem contato</strong>, permitindo automação do aquecimento.</p>
+          </div>
+
+          <div class="lei-mini">
+            <h4>💰 Economia real</h4>
+            <p>Com esses cálculos, é possível reduzir em até <strong>40%</strong> o consumo de energia elétrica no aquecimento de piscinas — o que, em um ano, representa <strong>centenas de reais economizados</strong> e <strong>quilos de CO₂ evitados</strong>.</p>
+          </div>
+
+          <div class="questao-exemplo">
+            <strong>🌱 Impacto ambiental:</strong>
+            <p>Aproveitar a energia solar é usar diretamente a radiação emitida pelo corpo negro mais importante para nós: o <strong>Sol</strong>. É física pura aplicada à sustentabilidade!</p>
+          </div>
+        </div>
+      </details>
+
+    </div>
+  </section>
+
+  <!-- 🆕 RELAÇÃO DAS MATÉRIAS COM A PISCINA -->
+  <section id="relacao" class="secao secao-relacao reveal" aria-labelledby="titulo-relacao">
+    <div class="secao-cabecalho">
+      <span class="secao-icone">🔗</span>
+      <div>
+        <span class="secao-tag">Integração de Saberes</span>
+        <h2 id="titulo-relacao">Relação das Matérias com a Piscina</h2>
+      </div>
+    </div>
+    <p>Como cada disciplina do projeto se conecta diretamente ao <strong>aquecimento sustentável da piscina</strong>:</p>
+
+    <div class="relacao-diagrama">
+      <div class="relacao-centro">
+        <div class="relacao-piscina">
+          <span class="relacao-emoji">🏊</span>
+          <strong>Projeto da Piscina</strong>
+          <small>Aquecimento sustentável</small>
+        </div>
+      </div>
+
+      <div class="relacao-ramos">
+        
+        <div class="ramo ramo-tecnociencia">
+          <div class="ramo-cabecalho">
+            <span class="ramo-icone">🌈</span>
+            <h3>Tecnociência</h3>
+            <small>Refração e Dispersão</small>
+          </div>
+          <ul class="ramo-conceitos">
+            <li>
+              <strong>Lei de Snell</strong>
+              <span>Explica como a luz solar muda de direção ao entrar na água da piscina.</span>
+            </li>
+            <li>
+              <strong>Dispersão cromática</strong>
+              <span>Cada cor é refratada em ângulo diferente, criando efeitos visuais no fundo da piscina.</span>
+            </li>
+            <li>
+              <strong>Espectro visível</strong>
+              <span>A luz que entra na piscina carrega energia que será absorvida e transformada em calor.</span>
+            </li>
+          </ul>
+          <div class="ramo-aplicacao">
+            <strong>💧 Aplicação na piscina:</strong>
+            <p>A refração define <strong>como a luz se distribui</strong> no volume de água, influenciando a eficiência do aquecimento e criando os efeitos visuais característicos (arco-íris, reflexos, fundo colorido).</p>
+          </div>
+        </div>
+
+        <div class="ramo ramo-robotica">
+          <div class="ramo-cabecalho">
+            <span class="ramo-icone">🤖</span>
+            <h3>Robótica</h3>
+            <small>Corpo Negro e Termodinâmica</small>
+          </div>
+          <ul class="ramo-conceitos">
+            <li>
+              <strong>Lei de Planck</strong>
+              <span>Descreve o espectro de radiação emitido pelo Sol (corpo negro a ~5800 K).</span>
+            </li>
+            <li>
+              <strong>Lei de Wien</strong>
+              <span>Explica por que o Sol emite pico no visível (~500 nm) — ideal para aquecer água.</span>
+            </li>
+            <li>
+              <strong>Sensores infravermelhos</strong>
+              <span>Medem a temperatura da água sem contato, permitindo automação.</span>
+            </li>
+          </ul>
+          <div class="ramo-aplicacao">
+            <strong>🔥 Aplicação na piscina:</strong>
+            <p>O conhecimento sobre corpo negro permite <strong>dimensionar coletores solares</strong>, prever a quantidade de energia disponível e <strong>automatizar o controle de temperatura</strong> com sensores IR.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="relacao-sintese">
+      <h3>🎯 Síntese da Integração</h3>
+      <div class="sintese-grid">
+        <div class="sintese-item">
+          <span class="sintese-icone">☀️</span>
+          <h4>1. O Sol emite</h4>
+          <p>Como corpo negro a 5800 K, emite radiação visível e infravermelha (Robótica/Planck).</p>
+        </div>
+        <div class="sintese-icone-seta">→</div>
+        <div class="sintese-item">
+          <span class="sintese-icone">💧</span>
+          <h4>2. A luz refrata</h4>
+          <p>Ao entrar na piscina, sofre refração e dispersão (Tecnociência/Snell).</p>
+        </div>
+        <div class="sintese-icone-seta">→</div>
+        <div class="sintese-item">
+          <span class="sintese-icone">🔥</span>
+          <h4>3. A água absorve</h4>
+          <p>A energia da radiação é convertida em calor, aquecendo a piscina.</p>
+        </div>
+        <div class="sintese-icone-seta">→</div>
+        <div class="sintese-item">
+          <span class="sintese-icone">🤖</span>
+          <h4>4. Sensores medem</h4>
+          <p>Pirômetros IR monitoram a temperatura e automatizam o sistema (Robótica).</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="destaque-box">
+      <span class="destaque-icone">🌱</span>
+      <div>
+        <h3>Resultado: Sustentabilidade Real</h3>
+        <p>A integração entre <strong>Tecnociência</strong> (como a luz se comporta na água) e <strong>Robótica</strong> (como a energia é emitida e medida) permite projetar um sistema de aquecimento solar que reduz em até <strong>40% o consumo de eletricidade</strong>, economiza dinheiro e evita a emissão de CO₂ na atmosfera.</p>
+      </div>
+    </div>
+  </section>
+
   <!-- GRÁFICO COMPARATIVO -->
   <section id="comparativo" class="secao reveal" aria-labelledby="titulo-comp">
     <div class="secao-cabecalho">
@@ -491,21 +735,21 @@
         <div class="card-equipe-avatar">LF</div>
         <h3>Lucas Felipe</h3>
         <p class="card-equipe-numero">Nº <strong>20</strong></p>
-        <p class="card-equipe-turma">Turma: <strong>2º N</strong></p>
+        <p class="card-equipe-turma">Turma: <strong>2° N</strong></p>
       </div>
 
       <div class="card-equipe">
         <div class="card-equipe-avatar">MA</div>
         <h3>Marco Antônio</h3>
         <p class="card-equipe-numero">Nº <strong>23</strong></p>
-        <p class="card-equipe-turma">Turma: <strong>2º N</strong></p>
+        <p class="card-equipe-turma">Turma: <strong>2° N</strong></p>
       </div>
 
       <div class="card-equipe">
         <div class="card-equipe-avatar">MT</div>
         <h3>Mateus Tessari</h3>
         <p class="card-equipe-numero">Nº <strong>25</strong></p>
-        <p class="card-equipe-turma">Turma: <strong>2º N</strong></p>
+        <p class="card-equipe-turma">Turma: <strong>2° N</strong></p>
       </div>
     </div>
 
